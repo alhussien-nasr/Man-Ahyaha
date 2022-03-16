@@ -14,11 +14,10 @@ import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
-  signInWithPhoneNumber,
+  signInWithPhoneNumber,User
 } from "firebase/auth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { app } from "../firebase/firebase-config";
-
 import { Screen } from "../components/Screen";
 import { AppInput } from "../components/AppInput";
 import { AppPicker } from "../components/AppPicker";
@@ -39,6 +38,9 @@ export const RegisterScreen = () => {
   console.log(verificationId);
   console.log(phoneNumber);
   const auth = getAuth();
+
+  console.log(auth.currentUser.uid);
+
 
   return (
     <Screen style={styles.container}>

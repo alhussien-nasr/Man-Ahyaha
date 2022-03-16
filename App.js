@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  , useEffect} from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import "react-native-gesture-handler";
 
@@ -6,31 +6,28 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AntDesign } from "@expo/vector-icons";
-import { Screen } from "./src/components/Screen";
 import { MenuProvider } from "react-native-popup-menu";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { AppPicker } from "./src/components/AppPicker";
-import BasicExample from "./src/components/Test";
-import { transform } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import { RegisterScreen } from "./src/screens/RegisterScreen";
-import { AddReqScreen } from "./src/screens/AddReqScreen";
-import { AppDropDown } from "./src/components/AppDropDown";
-import { AccountSettings } from "./src/screens/AccountSettings";
 import { SignInScreen } from "./src/screens/SignInScreen";
 import { Home } from "./src/screens/Home";
-import { color } from "./src/config/color";
 import { CustomDrower } from "./src/navigation/CustomDrower";
 import AboutAppScreen from "./src/screens/AboutAppScreen";
+import { authantication } from './src/firebase/firebase-config';
 export default function App() {
   const Drawer = createDrawerNavigator();
   const Stack = createNativeStackNavigator();
-  const MyStack = () => (
-    <Stack.Navigator>
-      <Stack.Screen name="sss" component={SignInScreen} />
-      <Stack.Screen name="regester" component={RegisterScreen} />
-    </Stack.Navigator>
-  );
-
+  const [user,setUser]=useState()
+  authantication.onAuthStateChanged((user)=>setUser(user))
+  console.log(user)
+  const MyStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="sss" component={SignInScreen} />
+        <Stack.Screen name="regester" component={RegisterScreen} />
+      </Stack.Navigator>
+    );
+  };
   return (
     <MenuProvider>
       <NavigationContainer>
@@ -70,7 +67,7 @@ export default function App() {
               ),
             }}
           />
-          <Drawer.Screen
+        {!user&&<Drawer.Screen
             name="تسجيل الدخول"
             component={MyStack}
             options={{
@@ -84,8 +81,7 @@ export default function App() {
                 />
               ),
             }}
-          />
-          {/* <Drawer.Screen name="regis" component={MyStack} /> */}
+          />}
         </Drawer.Navigator>
       </NavigationContainer>
     </MenuProvider>

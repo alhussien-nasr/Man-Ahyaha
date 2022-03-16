@@ -1,4 +1,4 @@
-import React, { useState  , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import "react-native-gesture-handler";
 
@@ -13,13 +13,17 @@ import { SignInScreen } from "./src/screens/SignInScreen";
 import { Home } from "./src/screens/Home";
 import { CustomDrower } from "./src/navigation/CustomDrower";
 import AboutAppScreen from "./src/screens/AboutAppScreen";
-import { authantication } from './src/firebase/firebase-config';
+import { authantication } from "./src/firebase/firebase-config";
 export default function App() {
   const Drawer = createDrawerNavigator();
   const Stack = createNativeStackNavigator();
-  const [user,setUser]=useState()
-  authantication.onAuthStateChanged((user)=>setUser(user))
-  console.log(user)
+  const [user, setUser] = useState();
+  useEffect(() => {
+    const foo =()=>authantication.onAuthStateChanged((user) => setUser(user));
+    return foo()
+  }, []);
+  authantication.onAuthStateChanged((user) => setUser(user));
+  console.log(user);
   const MyStack = () => {
     return (
       <Stack.Navigator>
@@ -67,21 +71,23 @@ export default function App() {
               ),
             }}
           />
-        {!user&&<Drawer.Screen
-            name="تسجيل الدخول"
-            component={MyStack}
-            options={{
-              header: () => null,
-              drawerIcon: ({ color }) => (
-                <AntDesign
-                  style={{ position: "absolute", right: 5 }}
-                  name="login"
-                  size={24}
-                  color={color}
-                />
-              ),
-            }}
-          />}
+          {!user && (
+            <Drawer.Screen
+              name="تسجيل الدخول"
+              component={MyStack}
+              options={{
+                header: () => null,
+                drawerIcon: ({ color }) => (
+                  <AntDesign
+                    style={{ position: "absolute", right: 5 }}
+                    name="login"
+                    size={24}
+                    color={color}
+                  />
+                ),
+              }}
+            />
+          )}
         </Drawer.Navigator>
       </NavigationContainer>
     </MenuProvider>

@@ -6,11 +6,15 @@ import {
   TouchableOpacity,
   ScrollView,
   TouchableWithoutFeedback,
+  Button
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-// import {authanticatopn} from '../firebase/firebase-config'
-// import { signInWithPhoneNumber } from "firebase/auth";
+import { getAuth, PhoneAuthProvider, signInWithCredential,signInWithPhoneNumber } from 'firebase/auth';
+import {
+  FirebaseRecaptchaVerifierModal,
+} from "expo-firebase-recaptcha";
+import { app } from "../firebase/firebase-config";
 
 import { Screen } from "../components/Screen";
 import { AppInput } from "../components/AppInput";
@@ -19,18 +23,37 @@ import { Appmodal } from "../components/Appmodal";
 import { AppButton } from "../components/AppButton";
 
 export const RegisterScreen = () => {
+  const recaptchaVerifier = useRef(null);
+
   const [accept, setAccept] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const [phoneNumber, setPhoneNumper] = useState();
+  const [verificationId, setVerificationId] = useState();
+  const [verificationCode, setVerificationCode] = useState();
+  
   const [type, setType] = useState();
-  const [code, setCode] = useState();
-  const [otpInput, setOtpInput] = useState(false);
-  console.log(accept);
+  console.log(verificationId);
+  console.log(phoneNumber);
+  const auth = getAuth();
+
+
   return (
     <Screen style={styles.container}>
-      {!otpInput ? (
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={app.options}
+        attemptInvisibleVerification={true}
+
+      />
+
+      {!verificationId ? (
         <>
           <View style={styles.inputContainer}>
-            <AppInput placeholder="رقم الجوال" />
+            <AppInput
+              placeholder="رقم الجوال"
+              onChangeText={(val) => setPhoneNumper(val)}
+            />
           </View>
           <View style={styles.inputContainer}>
             <AppInput placeholder="كلمة المرور" />
@@ -61,7 +84,6 @@ export const RegisterScreen = () => {
               />
               <Text>أوافق على الشروط والأحكام</Text>
             </View>
-
             <View>
               <TouchableOpacity onPress={() => setVisible(true)}>
                 <Text style={styles.conditionsbtnText}>الشروط والأحكام</Text>
@@ -69,7 +91,24 @@ export const RegisterScreen = () => {
             </View>
           </View>
           <View style={styles.btnContainer}>
-            <AppButton title={"التسجيل"} />
+            <AppButton
+              title={"التسجيل"}
+              onPress={async () => {
+                // The FirebaseRecaptchaVerifierModal ref implements the
+                // FirebaseAuthApplicationVerifier interface and can be
+                // passed directly to `verifyPhoneNumber`.
+                try {
+                  const phoneProvider = new PhoneAuthProvider(auth);
+                  const verificationId = await phoneProvider.verifyPhoneNumber(
+                    phoneNumber,
+                    recaptchaVerifier.current
+                  );
+                  setVerificationId(verificationId);
+                } catch (err) {
+                  console.log(err)
+                }
+              }}
+                  />
           </View>
           <Appmodal visible={visible} onPress={() => setVisible(false)}>
             <AppButton
@@ -105,7 +144,23 @@ export const RegisterScreen = () => {
         </>
       ) : (
         <View style={styles.inputContainer}>
-          <AppInput placeholder="رقم الجوال" />
+          <AppInput onChangeText={(val)=>setVerificationCode(val)} placeholder="رقم الجوال" />
+          <Button
+        title="Confirm Verification Code"
+        disabled={!verificationId}
+        onPress={async () => {
+          try {
+            const credential = PhoneAuthProvider.credential(
+              verificationId,
+              verificationCode
+            );
+            await signInWithCredential(auth, credential);
+          } catch (err) {
+            console.log('err',err)
+          }
+        }}
+      />
+
         </View>
       )}
     </Screen>

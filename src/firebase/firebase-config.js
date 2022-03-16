@@ -7,8 +7,9 @@ const firebaseConfig = {
   projectId: "man-ahyaha-acd7c",
   storageBucket: "man-ahyaha-acd7c.appspot.com",
   messagingSenderId: "60267939292",
-  appId: "1:60267939292:web:bcf4fb9672bfe98a7fbb19"
+  appId: "1:60267939292:web:bcf4fb9672bfe98a7fbb19",
 };
 
-const app = initializeApp(firebaseConfig);
-export const authanticatopn=getAuth(app )
+export const app = initializeApp(firebaseConfig);
+
+export const authantication = getAuth(app);

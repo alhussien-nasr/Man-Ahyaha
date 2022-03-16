@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
-  Platform
+  Platform,
 } from "react-native";
 
 import { AppButton } from "../components/AppButton";
@@ -15,8 +15,8 @@ import { AppInput } from "../components/AppInput";
 import { Appmodal } from "../components/Appmodal";
 import { Screen } from "../components/Screen";
 
-export const SignInScreen = ({navigation}) => {
-  console.log(navigation)
+export const SignInScreen = ({ navigation }) => {
+  console.log(navigation);
   const [visible, setVisible] = useState(false);
 
   return (
@@ -41,25 +41,27 @@ export const SignInScreen = ({navigation}) => {
         >
           <Text style={styles.textRed}>نسيت كلمة المرور ؟</Text>
         </TouchableOpacity>
-        <View style={[styles.register,styles.direction]}>
-          <TouchableOpacity onPress={()=>navigation.navigate('regester')}>
+        <View style={[styles.register, styles.direction]}>
+          <TouchableOpacity onPress={() => navigation.navigate("regester")}>
             <Text style={styles.textRed}>سجل الان</Text>
           </TouchableOpacity>
           <Text>ليس لديك حساب ؟</Text>
         </View>
       </View>
-        <Appmodal visible={visible}  animationType="fade" transparent={true}  onPress={() => setVisible(false)}>
-          <Image
-            style={styles.modalImg}
-            source={require("../assets/lock.png")}
-          />
-          <View style={styles.modalInput}>
-            <AppInput textAlign="right" placeholder="رقم الجوال" />
-          </View>
-          <View style={styles.modalbtn}>
-            <AppButton title="استعادة كلمة المرور" />
-          </View>
-        </Appmodal>
+      <Appmodal
+        visible={visible}
+        animationType="fade"
+        transparent={true}
+        onPress={() => setVisible(false)}
+      >
+        <Image style={styles.modalImg} source={require("../assets/lock.png")} />
+        <View style={styles.modalInput}>
+          <AppInput textAlign="right" placeholder="رقم الجوال" />
+        </View>
+        <View style={styles.modalbtn}>
+          <AppButton title="استعادة كلمة المرور" />
+        </View>
+      </Appmodal>
     </Screen>
   );
 };
@@ -120,7 +122,9 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     backgroundColor: "white",
-    transform: [{ scaleX: 5  },{scaleY:2}],
+    transform: [{ scaleX: 5 }, { scaleY: 2 }],
   },
-  direction:{flexDirection:Platform.OS==='android'?'row-reverse':'row'}
+  direction: {
+    flexDirection: Platform.OS === "android" ? "row-reverse" : "row",
+  },
 });

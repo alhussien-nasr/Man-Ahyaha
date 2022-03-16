@@ -6,14 +6,17 @@ import {
   TouchableOpacity,
   ScrollView,
   TouchableWithoutFeedback,
-  Button
+  Button,
 } from "react-native";
 import React, { useState, useRef } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { getAuth, PhoneAuthProvider, signInWithCredential,signInWithPhoneNumber } from 'firebase/auth';
 import {
-  FirebaseRecaptchaVerifierModal,
-} from "expo-firebase-recaptcha";
+  getAuth,
+  PhoneAuthProvider,
+  signInWithCredential,
+  signInWithPhoneNumber,
+} from "firebase/auth";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { app } from "../firebase/firebase-config";
 
 import { Screen } from "../components/Screen";
@@ -31,12 +34,11 @@ export const RegisterScreen = () => {
   const [phoneNumber, setPhoneNumper] = useState();
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
-  
+
   const [type, setType] = useState();
   console.log(verificationId);
   console.log(phoneNumber);
   const auth = getAuth();
-
 
   return (
     <Screen style={styles.container}>
@@ -44,7 +46,6 @@ export const RegisterScreen = () => {
         ref={recaptchaVerifier}
         firebaseConfig={app.options}
         attemptInvisibleVerification={true}
-
       />
 
       {!verificationId ? (
@@ -105,10 +106,10 @@ export const RegisterScreen = () => {
                   );
                   setVerificationId(verificationId);
                 } catch (err) {
-                  console.log(err)
+                  console.log(err);
                 }
               }}
-                  />
+            />
           </View>
           <Appmodal visible={visible} onPress={() => setVisible(false)}>
             <AppButton
@@ -144,23 +145,25 @@ export const RegisterScreen = () => {
         </>
       ) : (
         <View style={styles.inputContainer}>
-          <AppInput onChangeText={(val)=>setVerificationCode(val)} placeholder="رقم الجوال" />
+          <AppInput
+            onChangeText={(val) => setVerificationCode(val)}
+            placeholder="رقم الجوال"
+          />
           <Button
-        title="Confirm Verification Code"
-        disabled={!verificationId}
-        onPress={async () => {
-          try {
-            const credential = PhoneAuthProvider.credential(
-              verificationId,
-              verificationCode
-            );
-            await signInWithCredential(auth, credential);
-          } catch (err) {
-            console.log('err',err)
-          }
-        }}
-      />
-
+            title="Confirm Verification Code"
+            disabled={!verificationId}
+            onPress={async () => {
+              try {
+                const credential = PhoneAuthProvider.credential(
+                  verificationId,
+                  verificationCode
+                );
+                await signInWithCredential(auth, credential);
+              } catch (err) {
+                console.log("err", err);
+              }
+            }}
+          />
         </View>
       )}
     </Screen>

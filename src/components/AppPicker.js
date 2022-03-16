@@ -7,20 +7,17 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 
-export const AppPicker = ({items,onPick , type}) => {
-
+export const AppPicker = ({ items, onPick, type }) => {
   return (
     <View style={styles.container}>
       <FlatList
-      scrollEnabled={false}
+        scrollEnabled={false}
         data={items}
         numColumns={4}
         ItemSeparatorComponent={() => <View style={styles.separetor} />}
         renderItem={({ item }) => {
           return (
-            <TouchableWithoutFeedback
-              onPress={()=>onPick(item.name)}
-            >
+            <TouchableWithoutFeedback onPress={() => onPick(item.name)}>
               <View
                 style={[
                   styles.list,
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     borderColor: "#A2A2A2",
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal:5
+    marginHorizontal: 5,
   },
   text: {
     color: "#A2A2A2",
@@ -62,5 +59,5 @@ const styles = StyleSheet.create({
   separetor: { height: 20 },
   selected: { backgroundColor: "#ED4A4A" },
   textSelected: { color: "white" },
-  container:{height:130 }
+  container: { height: 130 },
 });

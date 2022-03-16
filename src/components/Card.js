@@ -18,7 +18,9 @@ export const Card = () => {
         </View>
         <View style={styles.locationContainer}>
           <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
-          <Text style={{color:color.midGray}} numberOfLines={1}>56 مكة المكرمة فندق الساعه الدور الخامس</Text>
+          <Text style={{ color: color.midGray }} numberOfLines={1}>
+            56 مكة المكرمة فندق الساعه الدور الخامس
+          </Text>
         </View>
         <View style={styles.row}>
           <View style={styles.typecontainer}>
@@ -26,26 +28,25 @@ export const Card = () => {
           </View>
           <View style={styles.DonationsReqContainer}>
             <Text style={styles.num}> ٥</Text>
-            <Text >تبرعات صفائح </Text>
+            <Text>تبرعات صفائح </Text>
           </View>
           <View style={styles.Progress}>
-
-          <CircularProgress
-            value={4}
-            radius={25}
-            duration={2000}
-            textColor={"black"}
-            maxValue={5}
-            textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
-            subtitle={`/`}
-            title={5}
-            activeStrokeColor={color.primiry}
-            activeStrokeWidth={2}
-            inActiveStrokeWidth={0}
-            subtitleStyle={styles.subtitleStyle}
-            titleStyle={styles.titleStyle}
-          />
-          <Text style={{alignSelf:'flex-end'}}>تمت</Text>
+            <CircularProgress
+              value={4}
+              radius={25}
+              duration={2000}
+              textColor={"black"}
+              maxValue={5}
+              textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
+              subtitle={`/`}
+              title={5}
+              activeStrokeColor={color.primiry}
+              activeStrokeWidth={2}
+              inActiveStrokeWidth={0}
+              subtitleStyle={styles.subtitleStyle}
+              titleStyle={styles.titleStyle}
+            />
+            <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
           </View>
         </View>
       </View>
@@ -125,5 +126,5 @@ const styles = StyleSheet.create({
     right: 0,
     color: color.primiry,
   },
-  Progress:{flexDirection:'row-reverse'}
+  Progress: { flexDirection: "row-reverse" },
 });

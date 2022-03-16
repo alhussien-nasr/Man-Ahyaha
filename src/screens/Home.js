@@ -10,8 +10,16 @@ export const Home = () => {
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />
       <View style={styles.row}>
-        <AppDropDown color="white" style={styles.dropDownOne} title='فصيلة الدم'/>
-        <AppDropDown color="white" style={styles.dropDownTwo} title=' المدينة' />
+        <AppDropDown
+          color="white"
+          style={styles.dropDownOne}
+          title="فصيلة الدم"
+        />
+        <AppDropDown
+          color="white"
+          style={styles.dropDownTwo}
+          title=" المدينة"
+        />
       </View>
       <Card />
     </Screen>

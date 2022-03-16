@@ -10,7 +10,11 @@ export const CustomDrower = (props) => {
   return (
     <DrawerContentScrollView style={styles.drower} {...props}>
       <View style={styles.imgContainer}>
-        <Image resizeMode='contain' style={styles.img} source={require("../assets/Group3189.png")} />
+        <Image
+          resizeMode="contain"
+          style={styles.img}
+          source={require("../assets/Group3189.png")}
+        />
       </View>
 
       <DrawerItemList {...props} />
@@ -20,6 +24,6 @@ export const CustomDrower = (props) => {
 
 const styles = StyleSheet.create({
   drower: { flexDirection: "row-reverse" },
-  imgContainer: { marginBottom: 30  },
-  img:{width:140,height:170}
+  imgContainer: { marginBottom: 30 },
+  img: { width: 140, height: 170 },
 });

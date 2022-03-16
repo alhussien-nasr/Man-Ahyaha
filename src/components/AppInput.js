@@ -1,11 +1,11 @@
 import { StyleSheet, TextInput } from "react-native";
 import React from "react";
 
-export const AppInput = ({  onChangeText , ...rest }) => {
+export const AppInput = ({ onChangeText, ...rest }) => {
   return (
     <TextInput
-    textAlign='right'
-    {...rest}
+      textAlign="right"
+      {...rest}
       onChangeText={onChangeText}
       style={styles.input}
     />

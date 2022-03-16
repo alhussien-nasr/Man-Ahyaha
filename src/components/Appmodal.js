@@ -1,20 +1,23 @@
 import React from "react";
-import { StyleSheet,  View ,TouchableWithoutFeedback , Modal,ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Modal,
+  ScrollView,
+} from "react-native";
 import { BlurView } from "expo-blur";
 
-export const Appmodal = ({ children , onPress , visible  }) => {
+export const Appmodal = ({ children, onPress, visible }) => {
   return (
-    <Modal  visible={visible} animationType="fade" transparent={true}>
-    <TouchableWithoutFeedback onPress={onPress}>
-
-    <BlurView  tint='dark' intensity={20} style={styles.modalContainer}>
-      
-      <TouchableWithoutFeedback  style={styles.container} >
-
-      <View style={styles.container}>{children}</View>
+    <Modal visible={visible} animationType="fade" transparent={true}>
+      <TouchableWithoutFeedback onPress={onPress}>
+        <BlurView tint="dark" intensity={20} style={styles.modalContainer}>
+          <TouchableWithoutFeedback style={styles.container}>
+            <View style={styles.container}>{children}</View>
+          </TouchableWithoutFeedback>
+        </BlurView>
       </TouchableWithoutFeedback>
-    </BlurView>
-    </TouchableWithoutFeedback>
     </Modal>
   );
 };

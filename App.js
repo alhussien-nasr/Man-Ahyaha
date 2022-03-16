@@ -24,9 +24,9 @@ import AboutAppScreen from "./src/screens/AboutAppScreen";
 export default function App() {
   const Drawer = createDrawerNavigator();
   const Stack = createNativeStackNavigator();
-  const MyStack = ()=>(
+  const MyStack = () => (
     <Stack.Navigator>
-      <Stack.Screen name="sss" component={SignInScreen}/>
+      <Stack.Screen name="sss" component={SignInScreen} />
       <Stack.Screen name="regester" component={RegisterScreen} />
     </Stack.Navigator>
   );
@@ -73,7 +73,8 @@ export default function App() {
           <Drawer.Screen
             name="تسجيل الدخول"
             component={MyStack}
-            options={{header:()=>null,
+            options={{
+              header: () => null,
               drawerIcon: ({ color }) => (
                 <AntDesign
                   style={{ position: "absolute", right: 5 }}

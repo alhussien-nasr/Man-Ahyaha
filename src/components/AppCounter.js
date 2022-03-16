@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-export const AppCounter = ({ counter , onIncres,onDecres ,style}) => {
+export const AppCounter = ({ counter, onIncres, onDecres, style }) => {
   return (
-    <View style={[styles.container,style]}>
-      <TouchableOpacity onPress={counter===0? null :onDecres}>
+    <View style={[styles.container, style]}>
+      <TouchableOpacity onPress={counter === 0 ? null : onDecres}>
         <AntDesign name="minuscircle" size={35} color="#ED4A4A" />
       </TouchableOpacity>
       {counter ? (

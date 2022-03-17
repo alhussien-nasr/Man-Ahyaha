@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,9 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { app, authantication } from "../firebase/firebase-config";
+import { getAuth, signInWithPhoneNumber ,AdditionalUserInfo} from "firebase/auth";
 
 import { AppButton } from "../components/AppButton";
 import { AppInput } from "../components/AppInput";
@@ -18,22 +21,51 @@ import { Screen } from "../components/Screen";
 export const SignInScreen = ({ navigation }) => {
   console.log(navigation);
   const [visible, setVisible] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState();
 
+  const recaptchaVerifier = useRef(null);
+  console.log(AdditionalUserInfo)
+  
   return (
     <Screen style={styles.container}>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={app.options}
+        attemptInvisibleVerification={true}
+      />
+
       <Text style={styles.text}>تسجيل الدخول</Text>
       <Image style={styles.img} source={require("../assets/Group3187.png")} />
       <View style={styles.shape} />
 
       <View style={styles.inputContainer}>
         <View style={styles.input}>
-          <AppInput textAlign="right" placeholder="رقم الجوال" />
+          <AppInput
+            onChangeText={(val) => setPhoneNumber(val)}
+            textAlign="right"
+            placeholder="رقم الجوال"
+          />
         </View>
         <View style={styles.input}>
           <AppInput textAlign="right" placeholder="كلمة المرور" />
         </View>
         <View style={styles.btn}>
-          <AppButton title="تسجيل الدخول" />
+          <AppButton
+            onPress={() =>
+              signInWithPhoneNumber(
+                authantication,
+                phoneNumber,
+                recaptchaVerifier.current
+              )
+                .then((confirmationResult) => {
+                  console.log(confirmationResult);
+                })
+                .catch((error) => {
+                  console.log('err',error);
+                })
+            }
+            title="تسجيل الدخول"
+          />
         </View>
         <TouchableOpacity
           style={styles.forgetPass}

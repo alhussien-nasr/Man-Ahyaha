@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Button } from "react-native";
 import "react-native-gesture-handler";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,21 +14,33 @@ import { Home } from "./src/screens/Home";
 import { CustomDrower } from "./src/navigation/CustomDrower";
 import AboutAppScreen from "./src/screens/AboutAppScreen";
 import { authantication } from "./src/firebase/firebase-config";
+import { MyRequestsScreen } from "./src/screens/MyRequestsScreen";
+import { color } from "./src/config/color";
+import {AddReqScreen} from './src/screens/AddReqScreen'
 export default function App() {
   const Drawer = createDrawerNavigator();
   const Stack = createNativeStackNavigator();
   const [user, setUser] = useState();
   useEffect(() => {
-    const foo =()=>authantication.onAuthStateChanged((user) => setUser(user));
-    return foo()
+    const foo = () =>
+      authantication.onAuthStateChanged((user) => setUser(user));
+    return foo();
   }, []);
   authantication.onAuthStateChanged((user) => setUser(user));
   console.log(user);
-  const MyStack = () => {
+  const AuthStack = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen name="sss" component={SignInScreen} />
         <Stack.Screen name="regester" component={RegisterScreen} />
+      </Stack.Navigator>
+    );
+  };
+  const AddReqStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="طلباتي" component={MyRequestsScreen} />
+        <Stack.Screen name="اضافة طلب تبرع" component={AddReqScreen} />
       </Stack.Navigator>
     );
   };
@@ -40,6 +52,8 @@ export default function App() {
             drawerPosition: "right",
             drawerStyle: { right: 0, width: "55%" },
             drawerItemStyle: { flexDirection: "row-reverse" },
+            drawerActiveTintColor: color.primiry,
+            drawerActiveBackgroundColor: null,
           }}
           drawerContent={(props) => <CustomDrower {...props} />}
         >
@@ -71,10 +85,25 @@ export default function App() {
               ),
             }}
           />
+          <Drawer.Screen
+            name="طلباتي"
+            component={AddReqStack}
+            options={{
+              headerShown:false,
+              drawerIcon: ({ color }) => (
+                <AntDesign
+                  style={{ position: "absolute", right: 5 }}
+                  name="gift"
+                  size={24}
+                  color={color}
+                />
+              ),
+            }}
+          />
           {!user && (
             <Drawer.Screen
               name="تسجيل الدخول"
-              component={MyStack}
+              component={AuthStack}
               options={{
                 header: () => null,
                 drawerIcon: ({ color }) => (
@@ -88,6 +117,12 @@ export default function App() {
               }}
             />
           )}
+          <Drawer.Screen
+            name="logout"
+            component={() => (
+              <Button title="logout" onPress={() => authantication.signOut()} />
+            )}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </MenuProvider>

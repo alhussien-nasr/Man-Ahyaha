@@ -39,7 +39,6 @@ export const RegisterScreen = () => {
   console.log(phoneNumber);
   const auth = getAuth();
 
-  console.log(auth.currentUser.uid);
 
 
   return (
@@ -97,9 +96,6 @@ export const RegisterScreen = () => {
             <AppButton
               title={"التسجيل"}
               onPress={async () => {
-                // The FirebaseRecaptchaVerifierModal ref implements the
-                // FirebaseAuthApplicationVerifier interface and can be
-                // passed directly to `verifyPhoneNumber`.
                 try {
                   const phoneProvider = new PhoneAuthProvider(auth);
                   const verificationId = await phoneProvider.verifyPhoneNumber(

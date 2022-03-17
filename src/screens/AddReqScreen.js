@@ -2,9 +2,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
+  FlatList,
   TextInput,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -19,21 +20,37 @@ import { AppButton } from "../components/AppButton";
 
 export const AddReqScreen = () => {
   const [type, setType] = useState();
+  const [city, setCity] = useState();
+  const [hospital, setHospital] = useState();
+
   const [counter, setCounter] = useState(0);
   console.log(counter);
   console.log(type);
+  console.log(city);
 
+  const listPicker = (item) => {
+    return (
+      <TouchableOpacity onPress={() => setCity(item.name)}>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
         <AppDropDown style={styles.rowDropDown} title="فصيلة الدم">
-          <AppPicker items={bloodType} onPick={(item)=>setType(item)} type={type}/>
+          <AppPicker
+            items={bloodType}
+            onPick={(item) => setType(item)}
+            type={type}
+          />
         </AppDropDown>
-        <AppDropDown
-          style={styles.rowDropDown}
-          title=" المدينة"
-          Option={AppPicker}
-        />
+        <AppDropDown style={styles.rowDropDown} title=" المدينة">
+          <FlatList
+            data={cityList}
+            renderItem={({ item }) => listPicker(item)}
+          />
+        </AppDropDown>
       </View>
       <AppDropDown title="اسم المستشفي" style={styles.vSpace} />
       <AppCounter
@@ -114,5 +131,37 @@ const bloodType = [
   },
   {
     name: "O-",
+  },
+];
+const cityList = [
+  {
+    name: "جدة",
+  },
+  {
+    name: "الدمام",
+  },
+  {
+    name: "aaa3",
+  },
+];
+
+const hospitalList = [
+  {
+    name: "مدينة الأمير سلطان الطبية العسكرية",
+  },
+  {
+    name: "مستشفي خميس مشيط العسكري    ",
+  },
+  {
+    name: "مستشفى الملك فهد للقوات المسلحة",
+  },
+  {
+    name: "مستشفى الملك فيصل التخصصي ومركز الأبحاث",
+  },
+  {
+    name: "مستشفى الملك فيصل التخصصي ",
+  },
+  {
+    name: "مستشفى الملك فهد التخصصي ",
   },
 ];

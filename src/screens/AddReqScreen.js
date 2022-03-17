@@ -21,15 +21,14 @@ export const AddReqScreen = () => {
   const [type, setType] = useState();
   const [counter, setCounter] = useState(0);
   console.log(counter);
+  console.log(type);
+
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
-        <AppDropDown
-          style={styles.rowDropDown}
-          items={bloodType}
-          title="فصيلة الدم"
-          Option={AppPicker}
-        />
+        <AppDropDown style={styles.rowDropDown} title="فصيلة الدم">
+          <AppPicker items={bloodType} onPick={(item)=>setType(item)} type={type}/>
+        </AppDropDown>
         <AppDropDown
           style={styles.rowDropDown}
           title=" المدينة"

@@ -1,3 +1,5 @@
+import "react-native-gesture-handler";
+
 import React, { useState, useEffect } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { AddReqStack, AuthStack } from "./AppStack";

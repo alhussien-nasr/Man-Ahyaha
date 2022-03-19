@@ -2,16 +2,18 @@ import React, { useState, useRef } from "react";
 import {
   View,
   Text,
-  Modal,
   StyleSheet,
-  SafeAreaView,
   Image,
   TouchableOpacity,
   Platform,
 } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { app, authantication } from "../firebase/firebase-config";
-import { getAuth, signInWithPhoneNumber ,AdditionalUserInfo} from "firebase/auth";
+import {
+  getAuth,
+  signInWithPhoneNumber,
+  AdditionalUserInfo,
+} from "firebase/auth";
 
 import { AppButton } from "../components/AppButton";
 import { AppInput } from "../components/AppInput";
@@ -24,8 +26,8 @@ export const SignInScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState();
 
   const recaptchaVerifier = useRef(null);
-  console.log(AdditionalUserInfo)
-  
+  console.log(AdditionalUserInfo);
+
   return (
     <Screen style={styles.container}>
       <FirebaseRecaptchaVerifierModal
@@ -61,7 +63,7 @@ export const SignInScreen = ({ navigation }) => {
                   console.log(confirmationResult);
                 })
                 .catch((error) => {
-                  console.log('err',error);
+                  console.log("err", error);
                 })
             }
             title="تسجيل الدخول"

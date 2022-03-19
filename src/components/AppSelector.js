@@ -23,10 +23,11 @@ const IconComponent = () => {
     </View>
   );
 };
-export const AppSelector = ({ style, title }) => {
+export const AppSelector = ({ style, title , onPress}) => {
   return (
     <BouncyCheckbox
       style={[styles.container, style]}
+      onPress={onPress}
       textStyle={{ textDecorationLine: "none", color: "black", fontSize: 13 }}
       text={title}
       size={40}

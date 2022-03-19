@@ -21,7 +21,12 @@ export const Home = () => {
           title=" المدينة"
         />
       </View>
-      <Card />
+      <Card
+        type={"A"}
+        numper={4}
+        city=" مكة المكرمة"
+        hospital="56  فندق الساعه الدور الخامس"
+      />
     </Screen>
   );
 };

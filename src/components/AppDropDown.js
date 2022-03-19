@@ -15,22 +15,27 @@ export const AppDropDown = ({
   children,
   OptionStyles,
   color = "#ED4A4A",
+  val,
 }) => {
   return (
-    <Menu
+    <Menu 
       style={[styles.container, style]}
       renderer={renderers.Popover}
       rendererProps={{ placement: "bottom", anchorStyle: styles.anchorStyle }}
     >
-      <MenuTrigger>
+      <MenuTrigger >
         <View style={[styles.trigger]}>
           <Ionicons name="chevron-down" size={30} color={color} />
-          <Text style={{ color: color === "white" ? "white" : "#AAAAAA" }}>
-            {title}
-          </Text>
+          {!val ? (
+            <Text style={{ color: color === "white" ? "white" : "#AAAAAA" }}>
+              {title}
+            </Text>
+          ) : (
+            <Text>{val}</Text>
+          )}
         </View>
       </MenuTrigger>
-      <MenuOptions optionsContainerStyle={[styles.options, OptionStyles]}>
+      <MenuOptions   optionsContainerStyle={[styles.options, OptionStyles]}>
         <MenuOption>{children}</MenuOption>
       </MenuOptions>
     </Menu>
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     left: -60,
   },
   options: {
-    width: 250,
+    minWidth: 250,
     height: 180,
     justifyContent: "center",
     borderRadius: 20,

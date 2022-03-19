@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import { Screen } from "../components/Screen";
@@ -17,42 +17,56 @@ import { AppCounter } from "../components/AppCounter";
 import { AppSelector } from "../components/AppSelector";
 import { color } from "../config/color";
 import { AppButton } from "../components/AppButton";
+import { ListPicker } from "../components/ListPicker";
 
-export const AddReqScreen = () => {
+export const AddReqScreen = ({ navigation }) => {
   const [type, setType] = useState();
   const [city, setCity] = useState();
   const [hospital, setHospital] = useState();
-
   const [counter, setCounter] = useState(0);
-  console.log(counter);
+  const [reqList, setReqList] = useState([]);
   console.log(type);
   console.log(city);
+  console.log(hospital);
+  console.log(counter);
+  console.log(reqList);
+  useEffect(() => {
+    if (reqList.length === 1) {
+      navigation.navigate("MyRequestsScreen", { param:reqList });
+    }
+  },[reqList]);
 
-  const listPicker = (item) => {
-    return (
-      <TouchableOpacity onPress={() => setCity(item.name)}>
-        <Text>{item.name}</Text>
-      </TouchableOpacity>
-    );
-  };
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
-        <AppDropDown style={styles.rowDropDown} title="فصيلة الدم">
+        <AppDropDown  val={type} style={styles.rowDropDown} title="فصيلة الدم">
           <AppPicker
             items={bloodType}
             onPick={(item) => setType(item)}
             type={type}
+            
           />
         </AppDropDown>
-        <AppDropDown style={styles.rowDropDown} title=" المدينة">
+        <AppDropDown val={city} style={styles.rowDropDown} title=" المدينة">
           <FlatList
             data={cityList}
-            renderItem={({ item }) => listPicker(item)}
+            renderItem={({ item }) => (
+              <ListPicker item={item.name} onPress={() => setCity(item.name)} />
+            )}
           />
         </AppDropDown>
       </View>
-      <AppDropDown title="اسم المستشفي" style={styles.vSpace} />
+      <AppDropDown title="اسم المستشفي" style={styles.vSpace} val={hospital} >
+        <FlatList
+          data={hospitalList}
+          renderItem={({ item }) => (
+            <ListPicker
+              item={item.name}
+              onPress={() => setHospital(item.name)}
+            />
+          )}
+        />
+      </AppDropDown>
       <AppCounter
         style={styles.vSpace}
         counter={counter}
@@ -80,7 +94,14 @@ export const AddReqScreen = () => {
           iconStyle={{ borderRadius: 10, borderColor: color.primiry }}
         />
       </View>
-      <AppButton style={styles.btn} title="اضافة الطلب" />
+      <AppButton
+        style={styles.btn}
+        title="اضافة الطلب"
+        onPress={() => {
+          setReqList((li) => [...li, { type, city, hospital, counter }]);
+          // navigation.navigate("MyRequestsScreen", { reqList });
+        }}
+      />
     </Screen>
   );
 };
@@ -139,9 +160,6 @@ const cityList = [
   },
   {
     name: "الدمام",
-  },
-  {
-    name: "aaa3",
   },
 ];
 

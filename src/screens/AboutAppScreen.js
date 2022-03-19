@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React from "react";
 import { Screen } from "../components/Screen";
 
-const AboutAppScreen = () => {
+export const AboutAppScreen = () => {
   return (
     <Screen style={styles.container}>
       <View style={styles.shape} />
@@ -40,7 +40,6 @@ const AboutAppScreen = () => {
   );
 };
 
-export default AboutAppScreen;
 
 const styles = StyleSheet.create({
   container: {

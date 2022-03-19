@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 
+import { authantication } from "../firebase/firebase-config";
+import { AntDesign } from "@expo/vector-icons";
+
 import {
   DrawerContentScrollView,
+  DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
 
@@ -18,6 +22,21 @@ export const CustomDrower = (props) => {
       </View>
 
       <DrawerItemList {...props} />
+      <DrawerItem
+        style={{ alignItems: "flex-end" }}
+        label="logout"
+        icon={({ color }) => (
+          <AntDesign
+            style={{ position: "absolute", right: 5 }}
+            name="logout"
+            size={24}
+            color={color}
+          />
+        )}
+        component={() => (
+          <Button title="logout" onPress={() => authantication.signOut()} />
+        )}
+      />
     </DrawerContentScrollView>
   );
 };

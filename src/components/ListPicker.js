@@ -1,13 +1,19 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
-export const ListPicker = ({ item, onPress }) => {
+export const ListPicker = ({ item, onPress, style }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>{item}</Text>
+    <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+        <Text>{item}</Text>
     </TouchableOpacity>
   );
 };
 
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    height: 30,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

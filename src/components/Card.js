@@ -5,7 +5,7 @@ import CircularProgress from "react-native-circular-progress-indicator";
 
 import { color } from "../config/color";
 
-export const Card = () => {
+export const Card = ({ userName, date, hospital, city, type, numper }) => {
   return (
     <TouchableOpacity activeOpacity={0.9} style={styles.container}>
       <View style={styles.imgContainer}>
@@ -19,15 +19,15 @@ export const Card = () => {
         <View style={styles.locationContainer}>
           <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
           <Text style={{ color: color.midGray }} numberOfLines={1}>
-            56 مكة المكرمة فندق الساعه الدور الخامس
+            {city + " " + hospital}
           </Text>
         </View>
         <View style={styles.row}>
           <View style={styles.typecontainer}>
-            <Text style={styles.type}>B+</Text>
+            <Text style={styles.type}>{type}</Text>
           </View>
           <View style={styles.DonationsReqContainer}>
-            <Text style={styles.num}> ٥</Text>
+            <Text style={styles.num}> {numper}</Text>
             <Text>تبرعات صفائح </Text>
           </View>
           <View style={styles.Progress}>
@@ -36,10 +36,10 @@ export const Card = () => {
               radius={25}
               duration={2000}
               textColor={"black"}
-              maxValue={5}
+              maxValue={numper && numper}
               textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
               subtitle={`/`}
-              title={5}
+              title={numper && numper}
               activeStrokeColor={color.primiry}
               activeStrokeWidth={2}
               inActiveStrokeWidth={0}

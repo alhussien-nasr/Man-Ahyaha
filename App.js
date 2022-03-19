@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, Button } from "react-native";
 import "react-native-gesture-handler";
 
-import {  NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { AntDesign } from "@expo/vector-icons";
 import { MenuProvider } from "react-native-popup-menu";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { Home } from "./src/screens/Home";
-import { CustomDrower } from "./src/navigation/CustomDrower";
-import AboutAppScreen from "./src/screens/AboutAppScreen";
 import { authantication } from "./src/firebase/firebase-config";
-import { color } from "./src/config/color";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AddReqStack, AuthStack } from "./src/navigation/AppStack";
-import {AppDrawer} from './src/navigation/AppDrawer'
+import { AppDrawer } from "./src/navigation/AppDrawer";
+
 export default function App() {
   const Drawer = createDrawerNavigator();
   const [user, setUser] = useState();
@@ -114,7 +108,7 @@ export default function App() {
             />
           )}
         </Drawer.Navigator> */}
-        <AppDrawer/>
+        <AppDrawer />
       </NavigationContainer>
     </MenuProvider>
   );

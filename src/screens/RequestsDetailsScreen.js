@@ -43,8 +43,24 @@ export const RequestNameScreen = () => {
             <Text style={styles.text}>طبيعة المرض ( حالته )</Text>
           </View>
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.input} multiline />
+        <View style={styles.condationContainer}>
+          <Text style={styles.condation}>
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
+          </Text>
         </View>
       </ScrollView>
     </Screen>
@@ -91,13 +107,15 @@ const styles = StyleSheet.create({
     textAlign: "right",
     marginVertical: 10,
   },
-  inputContainer: {
+  condationContainer: {
     width: "100%",
-    height: 200,
+    minHeight: 200,
     borderWidth: 1,
     borderColor: color.lightGray,
     borderRadius: 30,
     marginBottom: 40,
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
-  input: { flex: 1, textAlign: "right", lineHeight: 25 },
+  condation: { flex: 1, textAlign: "right", lineHeight: 25 },
 });

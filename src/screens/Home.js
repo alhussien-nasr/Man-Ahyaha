@@ -5,7 +5,8 @@ import { Screen } from "../components/Screen";
 import { AppDropDown } from "../components/AppDropDown";
 import { Card } from "../components/Card";
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
+  console.log(navigation)
   return (
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />
@@ -22,6 +23,7 @@ export const Home = () => {
         />
       </View>
       <Card
+        onPress={() => navigation.navigate("RequestNameScreen")}
         type={"A"}
         numper={4}
         city=" مكة المكرمة"

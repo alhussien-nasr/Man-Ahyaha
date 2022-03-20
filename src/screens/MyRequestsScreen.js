@@ -6,19 +6,18 @@ import { Screen } from "../components/Screen";
 import AddReqButton from "../components/AddReqButton";
 
 export const MyRequestsScreen = ({ navigation, route }) => {
-  const [list,setList]=useState()
-  
+  const [list, setList] = useState();
+
   useEffect(() => {
     if (route.params?.param) {
       // Post updated, do something with `route.params.post`
       // For example, send the post to the server
-      setList(route.params.param)
-      console.log('ss',list)
-
+      setList(route.params.param);
+      console.log("ss", list);
     }
   }, [route.params?.param]);
 
-console.log('ss',list)
+  console.log("ss", list);
   return (
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />
@@ -36,8 +35,9 @@ console.log('ss',list)
         />
       } */}
       <Card
+        onPress={() => navigation.navigate("RequestNameScreen")}
         type={"A"}
-        numper={4}
+        details
         city=" مكة المكرمة"
         hospital="56  فندق الساعه الدور الخامس"
       />

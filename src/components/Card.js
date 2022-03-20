@@ -5,66 +5,92 @@ import CircularProgress from "react-native-circular-progress-indicator";
 
 import { color } from "../config/color";
 
-export const Card = ({ userName, date, hospital, city, type, numper }) => {
+export const Card = ({
+  userName,
+  date,
+  hospital,
+  city,
+  type,
+  numper,
+  details,
+  onPress
+}) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} style={styles.container}>
-      <View style={styles.imgContainer}>
-        <Image style={styles.img} source={require("../assets/Group8.png")} />
+    <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.card}>
+      <View style={styles.container}>
+        <View style={styles.imgContainer}>
+          <Image style={styles.img} source={require("../assets/Group8.png")} />
+        </View>
+        <View style={styles.detailsContainer}>
+          <View style={styles.row}>
+            <Text>hussien nasr</Text>
+            <Text>2022/3/3</Text>
+          </View>
+          <View style={styles.locationContainer}>
+            <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
+            <Text style={{ color: color.midGray }} numberOfLines={1}>
+              {city + " " + hospital}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <View style={styles.typecontainer}>
+              <Text style={styles.type}>{type}</Text>
+            </View>
+            {!details ? (
+              <>
+                <View style={styles.DonationsReqContainer}>
+                  <Text style={styles.num}> {numper}</Text>
+                  <Text>تبرعات صفائح </Text>
+                </View>
+                <View style={styles.Progress}>
+                  <CircularProgress
+                    value={4}
+                    radius={25}
+                    duration={2000}
+                    textColor={"black"}
+                    maxValue={numper && numper}
+                    textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
+                    subtitle={`/`}
+                    title={numper && numper}
+                    activeStrokeColor={color.primiry}
+                    activeStrokeWidth={2}
+                    inActiveStrokeWidth={0}
+                    subtitleStyle={styles.subtitleStyle}
+                    titleStyle={styles.titleStyle}
+                  />
+                  <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
+                </View>
+              </>
+            ) : (
+              <View style={styles.phoneNumper}>
+                <Text style={styles.phoneNumperText}>+20101111111</Text>
+              </View>
+            )}
+          </View>
+        </View>
       </View>
-      <View style={styles.detailsContainer}>
-        <View style={styles.row}>
-          <Text>hussien nasr</Text>
-          <Text>2022/3/3</Text>
+      {details && (
+        <View style={styles.details}>
+          <Text style={styles.detailsText}>عرض التفاصيل</Text>
         </View>
-        <View style={styles.locationContainer}>
-          <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
-          <Text style={{ color: color.midGray }} numberOfLines={1}>
-            {city + " " + hospital}
-          </Text>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.typecontainer}>
-            <Text style={styles.type}>{type}</Text>
-          </View>
-          <View style={styles.DonationsReqContainer}>
-            <Text style={styles.num}> {numper}</Text>
-            <Text>تبرعات صفائح </Text>
-          </View>
-          <View style={styles.Progress}>
-            <CircularProgress
-              value={4}
-              radius={25}
-              duration={2000}
-              textColor={"black"}
-              maxValue={numper && numper}
-              textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
-              subtitle={`/`}
-              title={numper && numper}
-              activeStrokeColor={color.primiry}
-              activeStrokeWidth={2}
-              inActiveStrokeWidth={0}
-              subtitleStyle={styles.subtitleStyle}
-              titleStyle={styles.titleStyle}
-            />
-            <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
-          </View>
-        </View>
-      </View>
+      )}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  card: {
     width: "90%",
-    height: 140,
+    minHeight: 140,
     borderWidth: 1,
     borderRadius: 15,
-    flexDirection: "row-reverse",
     backgroundColor: "white",
-    paddingTop: 25,
     borderColor: color.lightGray,
+    paddingTop: 25,
     paddingHorizontal: 10,
+  },
+  container: {
+    flexDirection: "row-reverse",
   },
   imgContainer: {
     width: 70,
@@ -127,4 +153,27 @@ const styles = StyleSheet.create({
     color: color.primiry,
   },
   Progress: { flexDirection: "row-reverse" },
+  details: {
+    width: "100%",
+    height: 30,
+    backgroundColor: "#FF3643",
+    borderRadius: 5,
+    marginVertical: 10,
+    justifyContent: "center",
+  },
+  detailsText: {
+    textAlign: "center",
+    color: "white",
+  },
+  phoneNumper: {
+    width: 150,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: color.midGray,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 40,
+  },
+  phoneNumperText: { color: "#FF3643" },
 });

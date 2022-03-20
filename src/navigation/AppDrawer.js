@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 
 import React, { useState, useEffect } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { AddReqStack, AuthStack } from "./AppStack";
+import { AddReqStack, AuthStack, HomeStack } from "./AppStack";
 
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -27,16 +27,7 @@ export const AppDrawer = () => {
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
-        headerLeft: () => null,
-        headerRight: () => (
-          <MaterialCommunityIcons
-            onPress={() => navigation.toggleDrawer()}
-            style={{ position: "absolute", right: 5 }}
-            name="menu"
-            size={24}
-            color={"black"}
-          />
-        ),
+        headerShown:false,
         drawerPosition: "right",
         drawerStyle: { right: 0, width: "55%" },
         drawerItemStyle: { flexDirection: "row-reverse" },
@@ -58,7 +49,7 @@ export const AppDrawer = () => {
           ),
         }}
         name="Home"
-        component={Home}
+        component={HomeStack}
       />
       <Drawer.Screen
         name="AboutAppScreen"

@@ -32,19 +32,18 @@ export const AddReqScreen = ({ navigation }) => {
   console.log(reqList);
   useEffect(() => {
     if (reqList.length === 1) {
-      navigation.navigate("MyRequestsScreen", { param:reqList });
+      navigation.navigate("MyRequestsScreen", { param: reqList });
     }
-  },[reqList]);
+  }, [reqList]);
 
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
-        <AppDropDown  val={type} style={styles.rowDropDown} title="فصيلة الدم">
+        <AppDropDown val={type} style={styles.rowDropDown} title="فصيلة الدم">
           <AppPicker
             items={bloodType}
             onPick={(item) => setType(item)}
             type={type}
-            
           />
         </AppDropDown>
         <AppDropDown val={city} style={styles.rowDropDown} title=" المدينة">
@@ -56,7 +55,7 @@ export const AddReqScreen = ({ navigation }) => {
           />
         </AppDropDown>
       </View>
-      <AppDropDown title="اسم المستشفي" style={styles.vSpace} val={hospital} >
+      <AppDropDown title="اسم المستشفي" style={styles.vSpace} val={hospital}>
         <FlatList
           data={hospitalList}
           renderItem={({ item }) => (
@@ -99,7 +98,6 @@ export const AddReqScreen = ({ navigation }) => {
         title="اضافة الطلب"
         onPress={() => {
           setReqList((li) => [...li, { type, city, hospital, counter }]);
-          // navigation.navigate("MyRequestsScreen", { reqList });
         }}
       />
     </Screen>

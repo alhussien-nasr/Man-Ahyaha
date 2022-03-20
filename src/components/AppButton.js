@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#ED4A4A",
     borderRadius: 30,
-    paddingRight: 20,
     justifyContent: "center",
   },
   text: { textAlign: "center", color: "white", fontSize: 15 },

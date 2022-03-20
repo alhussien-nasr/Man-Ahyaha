@@ -3,7 +3,7 @@ import { AddReqScreen } from "../screens/AddReqScreen";
 import { Home } from "../screens/Home";
 import { MyRequestsScreen } from "../screens/MyRequestsScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
-import { RequestNameScreen } from "../screens/RequestNameScreen";
+import { RequestNameScreen } from "../screens/RequestsDetailsScreen";
 import { SignInScreen } from "../screens/SignInScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 

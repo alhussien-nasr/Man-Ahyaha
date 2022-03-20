@@ -28,6 +28,7 @@ export const Home = ({ navigation }) => {
         numper={4}
         city=" مكة المكرمة"
         hospital="56  فندق الساعه الدور الخامس"
+        target={4}
       />
     </Screen>
   );

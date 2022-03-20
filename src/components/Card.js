@@ -13,13 +13,14 @@ export const Card = ({
   type,
   numper,
   details,
-  onPress
+  onPress,
+  target
 }) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.card}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image style={styles.img} source={require("../assets/Group8.png")} />
+          <Image source={require("../assets/Group8.png")} />
         </View>
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
@@ -44,14 +45,14 @@ export const Card = ({
                 </View>
                 <View style={styles.Progress}>
                   <CircularProgress
-                    value={4}
+                    value={numper}
                     radius={25}
                     duration={2000}
                     textColor={"black"}
-                    maxValue={numper && numper}
+                    maxValue={target}
                     textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
                     subtitle={`/`}
-                    title={numper && numper}
+                    title={target}
                     activeStrokeColor={color.primiry}
                     activeStrokeWidth={2}
                     inActiveStrokeWidth={0}

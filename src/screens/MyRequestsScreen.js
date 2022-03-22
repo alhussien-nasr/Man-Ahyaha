@@ -35,7 +35,7 @@ export const MyRequestsScreen = ({ navigation, route }) => {
         />
       } */}
       <Card
-        onPress={() => navigation.navigate("RequestNameScreen")}
+        // onPress={() => }
         type={"A"}
         details
         city=" مكة المكرمة"

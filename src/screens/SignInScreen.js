@@ -13,6 +13,7 @@ import {
   getAuth,
   signInWithPhoneNumber,
   AdditionalUserInfo,
+  createUserWithEmailAndPassword
 } from "firebase/auth";
 
 import { AppButton } from "../components/AppButton";
@@ -36,7 +37,7 @@ export const SignInScreen = ({ navigation }) => {
         attemptInvisibleVerification={true}
       />
 
-      <Text style={styles.text}>تسجيل الدخول</Text>
+      {/* <Text style={styles.text}>تسجيل الدخول</Text> */}
       <Image style={styles.img} source={require("../assets/Group3187.png")} />
       <View style={styles.shape} />
 
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  img: { marginTop: 28, marginBottom: 55 },
+  img: { marginTop: 28, marginBottom: 90 },
   text: { marginTop: 14 },
   inputContainer: {
     height: "100%",

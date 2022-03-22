@@ -26,8 +26,8 @@ export const AppDrawer = () => {
 
   return (
     <Drawer.Navigator
-      screenOptions={({ navigation }) => ({
-        headerShown:false,
+      screenOptions={() => ({
+        headerShown: false,
         drawerPosition: "right",
         drawerStyle: { right: 0, width: "55%" },
         drawerItemStyle: { flexDirection: "row-reverse" },

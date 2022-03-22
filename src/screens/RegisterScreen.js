@@ -14,15 +14,18 @@ import {
   getAuth,
   PhoneAuthProvider,
   signInWithCredential,
-  signInWithPhoneNumber,User
+  signInWithPhoneNumber,
+  User,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { app } from "../firebase/firebase-config";
+import { app, authantication, db } from "../firebase/firebase-config";
 import { Screen } from "../components/Screen";
 import { AppInput } from "../components/AppInput";
 import { AppPicker } from "../components/AppPicker";
 import { Appmodal } from "../components/Appmodal";
 import { AppButton } from "../components/AppButton";
+import { doc, setDoc } from "firebase/firestore";
 
 export const RegisterScreen = () => {
   const recaptchaVerifier = useRef(null);
@@ -31,6 +34,11 @@ export const RegisterScreen = () => {
   const [visible, setVisible] = useState(false);
 
   const [phoneNumber, setPhoneNumper] = useState();
+  const [password, setPassword] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [user, setUser] = useState();
+
   const [verificationId, setVerificationId] = useState();
   const [verificationCode, setVerificationCode] = useState();
 
@@ -38,8 +46,7 @@ export const RegisterScreen = () => {
   console.log(verificationId);
   console.log(phoneNumber);
   const auth = getAuth();
-
-
+  console.log("user", user);
 
   return (
     <Screen style={styles.container}>
@@ -58,13 +65,22 @@ export const RegisterScreen = () => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <AppInput placeholder="كلمة المرور" />
+            <AppInput
+              placeholder="كلمة المرور"
+              onChangeText={(val) => setPassword(val)}
+            />
           </View>
           <View style={styles.inputContainer}>
-            <AppInput placeholder="الاسم" />
+            <AppInput
+              placeholder="الاسم"
+              onChangeText={(val) => setName(val)}
+            />
           </View>
           <View style={styles.inputContainer}>
-            <AppInput placeholder="البريد الالكتروني" />
+            <AppInput
+              placeholder="البريد الالكتروني"
+              onChangeText={(val) => setEmail(val)}
+            />
           </View>
           <View style={styles.typeContainer}>
             <Text style={styles.textType}>اختر فصيلة الدم</Text>
@@ -95,17 +111,40 @@ export const RegisterScreen = () => {
           <View style={styles.btnContainer}>
             <AppButton
               title={"التسجيل"}
-              onPress={async () => {
-                try {
-                  const phoneProvider = new PhoneAuthProvider(auth);
-                  const verificationId = await phoneProvider.verifyPhoneNumber(
-                    phoneNumber,
-                    recaptchaVerifier.current
-                  );
-                  setVerificationId(verificationId);
-                } catch (err) {
-                  console.log(err);
-                }
+              // onPress={async () => {
+              //   try {
+              //     const phoneProvider = new PhoneAuthProvider(auth);
+              //     const verificationId = await phoneProvider.verifyPhoneNumber(
+              //       phoneNumber,
+              //       recaptchaVerifier.current
+              //     );
+              //     setVerificationId(verificationId);
+              //   } catch (err) {
+              //     console.log(err);
+              //   }
+              // }}
+              onPress={() => {
+                const auth = getAuth();
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((val) => {
+                    console.log(val);
+                    setUser(val.user);
+                    return user
+                  })
+                  .then((user) => {
+                    setDoc(
+                      doc(db, "users", user.uid),
+                      {
+                        email,
+                        name,
+                        phoneNumber,
+                      },
+                     
+                    ).then(() => console.log("Document updated"));
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
               }}
             />
           </View>

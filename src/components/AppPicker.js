@@ -15,6 +15,7 @@ export const AppPicker = ({ items, onPick, type }) => {
         data={items}
         numColumns={4}
         ItemSeparatorComponent={() => <View style={styles.separetor} />}
+        keyExtractor={(item, index) => index}
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback onPress={() => onPick(item.name)}>

@@ -27,19 +27,19 @@ export const CustomDrower = (props) => {
       <DrawerItem
         style={{ alignItems: "flex-end" }}
         label="logout"
+        onPress={() => {
+          console.log("dddd");
+
+          signOut(auth)
+            .then(() => {
+              // Sign-out successful.
+            })
+            .catch((error) => {
+              // An error happened.
+            });
+        }}
         icon={({ color }) => (
           <AntDesign
-            onPress={() => {
-              console.log("dddd");
-
-              signOut(auth)
-                .then(() => {
-                  // Sign-out successful.
-                })
-                .catch((error) => {
-                  // An error happened.
-                });
-            }}
             style={{ position: "absolute", right: 5 }}
             name="logout"
             size={24}

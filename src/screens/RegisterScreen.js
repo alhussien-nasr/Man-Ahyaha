@@ -17,6 +17,7 @@ import {
   signInWithPhoneNumber,
   User,
   createUserWithEmailAndPassword,
+  linkWithPhoneNumber,
 } from "firebase/auth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { app, authantication, db } from "../firebase/firebase-config";
@@ -55,154 +56,142 @@ export const RegisterScreen = () => {
         firebaseConfig={app.options}
         attemptInvisibleVerification={true}
       />
-
-      {!verificationId ? (
-        <>
-          <View style={styles.inputContainer}>
-            <AppInput
-              placeholder="رقم الجوال"
-              onChangeText={(val) => setPhoneNumper(val)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <AppInput
-              placeholder="كلمة المرور"
-              onChangeText={(val) => setPassword(val)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <AppInput
-              placeholder="الاسم"
-              onChangeText={(val) => setName(val)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <AppInput
-              placeholder="البريد الالكتروني"
-              onChangeText={(val) => setEmail(val)}
-            />
-          </View>
-          <View style={styles.typeContainer}>
-            <Text style={styles.textType}>اختر فصيلة الدم</Text>
-            <AppPicker items={bloodType} onPick={setType} type={type} />
-          </View>
-          <View style={styles.checkContainer}>
-            <View style={styles.check}>
-              <BouncyCheckbox
-                size={35}
-                onPress={() =>
-                  accept === false ? setAccept(true) : setAccept(false)
-                }
-                fillColor="white"
-                ImageComponent={() => (
-                  <Image source={require("../assets/ok.png")} />
-                )}
-                iconStyle={{ borderColor: "#ED4A4A" }}
-                style={styles.checkBox}
-              />
-              <Text>أوافق على الشروط والأحكام</Text>
-            </View>
-            <View>
-              <TouchableOpacity onPress={() => setVisible(true)}>
-                <Text style={styles.conditionsbtnText}>الشروط والأحكام</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.btnContainer}>
-            <AppButton
-              title={"التسجيل"}
-              // onPress={async () => {
-              //   try {
-              //     const phoneProvider = new PhoneAuthProvider(auth);
-              //     const verificationId = await phoneProvider.verifyPhoneNumber(
-              //       phoneNumber,
-              //       recaptchaVerifier.current
-              //     );
-              //     setVerificationId(verificationId);
-              //   } catch (err) {
-              //     console.log(err);
-              //   }
-              // }}
-              onPress={() => {
-                const auth = getAuth();
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((val) => {
-                    console.log(val);
-                    setUser(val.user);
-                    return user
-                  })
-                  .then((user) => {
-                    setDoc(
-                      doc(db, "users", user.uid),
-                      {
-                        email,
-                        name,
-                        phoneNumber,
-                      },
-                     
-                    ).then(() => console.log("Document updated"));
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }}
-            />
-          </View>
-          <Appmodal visible={visible} onPress={() => setVisible(false)}>
-            <AppButton
-              disabled
-              style={styles.modalBtn}
-              title={"الشروط و الأحكام"}
-            />
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{ height: 350, width: 250 }}
-            >
-              <TouchableWithoutFeedback touchSoundDisabled disabled>
-                <Text style={styles.modalText}>
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
-                  الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
-                  الشروط و الأحكام
-                </Text>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-          </Appmodal>
-        </>
-      ) : (
+      {/* {!verificationId ? ( */}
+      <>
         <View style={styles.inputContainer}>
           <AppInput
-            onChangeText={(val) => setVerificationCode(val)}
             placeholder="رقم الجوال"
+            onChangeText={(val) => setPhoneNumper(val)}
           />
-          <Button
-            title="Confirm Verification Code"
-            disabled={!verificationId}
-            onPress={async () => {
-              try {
-                const credential = PhoneAuthProvider.credential(
-                  verificationId,
-                  verificationCode
-                );
-                await signInWithCredential(auth, credential);
-              } catch (err) {
-                console.log("err", err);
+        </View>
+        <View style={styles.inputContainer}>
+          <AppInput
+            placeholder="كلمة المرور"
+            onChangeText={(val) => setPassword(val)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <AppInput placeholder="الاسم" onChangeText={(val) => setName(val)} />
+        </View>
+        <View style={styles.inputContainer}>
+          <AppInput
+            placeholder="البريد الالكتروني"
+            onChangeText={(val) => setEmail(val)}
+          />
+        </View>
+        <View style={styles.typeContainer}>
+          <Text style={styles.textType}>اختر فصيلة الدم</Text>
+          <AppPicker items={bloodType} onPick={setType} type={type} />
+        </View>
+        <View style={styles.checkContainer}>
+          <View style={styles.check}>
+            <BouncyCheckbox
+              size={35}
+              onPress={() =>
+                accept === false ? setAccept(true) : setAccept(false)
               }
+              fillColor="white"
+              ImageComponent={() => (
+                <Image source={require("../assets/ok.png")} />
+              )}
+              iconStyle={{ borderColor: "#ED4A4A" }}
+              style={styles.checkBox}
+            />
+            <Text>أوافق على الشروط والأحكام</Text>
+          </View>
+          <View>
+            <TouchableOpacity onPress={() => setVisible(true)}>
+              <Text style={styles.conditionsbtnText}>الشروط والأحكام</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.btnContainer}>
+          <AppButton
+            title={"التسجيل"}
+            // onPress={async () => {
+            //   try {
+            //     const phoneProvider = new PhoneAuthProvider(auth);
+            //     const verificationId = await phoneProvider.verifyPhoneNumber(
+            //       phoneNumber,
+            //       recaptchaVerifier.current
+            //     );
+            //     setVerificationId(verificationId);
+            //   } catch (err) {
+            //     console.log(err);
+            //   }
+            // }}
+            onPress={() => {
+              const auth = getAuth();
+              createUserWithEmailAndPassword(auth, email, password)
+                .then((val) => {
+                  setUser(val.user);
+                  setDoc(doc(db, "users", val.user.uid), {
+                    email,
+                    name,
+                    phoneNumber,
+                  }).then(() => console.log("Document updated"));
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           />
         </View>
-      )}
+        <Appmodal visible={visible} onPress={() => setVisible(false)}>
+          <AppButton
+            disabled
+            style={styles.modalBtn}
+            title={"الشروط و الأحكام"}
+          />
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ height: 350, width: 250 }}
+          >
+            <TouchableWithoutFeedback touchSoundDisabled disabled>
+              <Text style={styles.modalText}>
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و
+                الأحكام الشروط و الأحكام الشروط و الأحكام الشروط و الأحكام
+                الشروط و الأحكام
+              </Text>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+        </Appmodal>
+      </>
+      {/* ) : (
+      <View style={styles.inputContainer}>
+        <AppInput
+          onChangeText={(val) => setVerificationCode(val)}
+          placeholder="رقم الجوال"
+        />
+        <Button
+          title="Confirm Verification Code"
+          disabled={!verificationId}
+          onPress={async () => {
+            try {
+              const credential = PhoneAuthProvider.credential(
+                verificationId,
+                verificationCode
+              );
+              await signInWithCredential(auth, credential);
+            } catch (err) {
+              console.log("err", err);
+            }
+          }}
+        />
+      </View>
+      )} */}
     </Screen>
   );
 };

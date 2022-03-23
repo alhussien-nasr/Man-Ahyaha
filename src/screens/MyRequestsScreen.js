@@ -10,8 +10,6 @@ export const MyRequestsScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params?.param) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
       setList(route.params.param);
       console.log("ss", list);
     }

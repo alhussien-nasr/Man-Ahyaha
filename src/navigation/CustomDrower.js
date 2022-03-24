@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { getAuth, signOut } from "firebase/auth";
 import { authantication } from "../firebase/firebase-config";
@@ -13,6 +13,14 @@ import {
 
 export const CustomDrower = (props) => {
   const auth = getAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const foo = () =>
+      authantication.onAuthStateChanged((user) => setUser(user));
+    return foo();
+  }, []);
+
   return (
     <DrawerContentScrollView style={styles.drower} {...props}>
       <View style={styles.imgContainer}>
@@ -24,29 +32,31 @@ export const CustomDrower = (props) => {
       </View>
 
       <DrawerItemList {...props} />
-      <DrawerItem
-        style={{ alignItems: "flex-end" }}
-        label="logout"
-        onPress={() => {
-          console.log("dddd");
+      {user && (
+        <DrawerItem
+          style={{ alignItems: "flex-end" }}
+          label="logout"
+          onPress={() => {
+            console.log("dddd");
 
-          signOut(auth)
-            .then(() => {
-              // Sign-out successful.
-            })
-            .catch((error) => {
-              // An error happened.
-            });
-        }}
-        icon={({ color }) => (
-          <AntDesign
-            style={{ position: "absolute", right: 5 }}
-            name="logout"
-            size={24}
-            color={color}
-          />
-        )}
-      />
+            signOut(auth)
+              .then(() => {
+                // Sign-out successful.
+              })
+              .catch((error) => {
+                // An error happened.
+              });
+          }}
+          icon={({ color }) => (
+            <AntDesign
+              style={{ position: "absolute", right: 5 }}
+              name="logout"
+              size={24}
+              color={color}
+            />
+          )}
+        />
+      )}
     </DrawerContentScrollView>
   );
 };

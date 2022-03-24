@@ -4,6 +4,9 @@ import React from "react";
 export const AppInput = ({ onChangeText, ...rest }) => {
   return (
     <TextInput
+      autoCorrect={false}
+      autoCapitalize={false}
+      autoComplet={false}
       textAlign="right"
       {...rest}
       onChangeText={onChangeText}

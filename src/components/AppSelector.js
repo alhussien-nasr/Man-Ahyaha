@@ -23,7 +23,7 @@ const IconComponent = () => {
     </View>
   );
 };
-export const AppSelector = ({ style, title , onPress}) => {
+export const AppSelector = ({ style, title , onPress , ...rest}) => {
   return (
     <BouncyCheckbox
       style={[styles.container, style]}
@@ -34,6 +34,7 @@ export const AppSelector = ({ style, title , onPress}) => {
       fillColor={""}
       iconStyle={{ borderColor: "#ED4A4A" }}
       ImageComponent={() => <IconComponent />}
+      {...rest}
     />
   );
 };

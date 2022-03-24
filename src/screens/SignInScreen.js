@@ -9,12 +9,7 @@ import {
 } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { app, authantication } from "../firebase/firebase-config";
-import {
-  getAuth,
-  signInWithPhoneNumber,
-  AdditionalUserInfo,
-  createUserWithEmailAndPassword
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { AppButton } from "../components/AppButton";
 import { AppInput } from "../components/AppInput";
@@ -24,47 +19,47 @@ import { Screen } from "../components/Screen";
 export const SignInScreen = ({ navigation }) => {
   console.log(navigation);
   const [visible, setVisible] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-  const recaptchaVerifier = useRef(null);
-  console.log(AdditionalUserInfo);
+  // const recaptchaVerifier = useRef(null);
 
   return (
     <Screen style={styles.container}>
-      <FirebaseRecaptchaVerifierModal
+      {/* <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={app.options}
         attemptInvisibleVerification={true}
-      />
+      /> */}
 
-      {/* <Text style={styles.text}>تسجيل الدخول</Text> */}
       <Image style={styles.img} source={require("../assets/Group3187.png")} />
       <View style={styles.shape} />
 
       <View style={styles.inputContainer}>
         <View style={styles.input}>
           <AppInput
-            onChangeText={(val) => setPhoneNumber(val)}
+            onChangeText={(val) => setEmail(val)}
             textAlign="right"
-            placeholder="رقم الجوال"
+            placeholder="البريد الالكتروني"
           />
         </View>
         <View style={styles.input}>
-          <AppInput textAlign="right" placeholder="كلمة المرور" />
+          <AppInput
+          
+            textAlign="right"
+            placeholder="كلمة المرور"
+            onChangeText={(val) => setPassword(val)}
+          />
         </View>
         <View style={styles.btn}>
           <AppButton
             onPress={() =>
-              signInWithPhoneNumber(
-                authantication,
-                phoneNumber,
-                recaptchaVerifier.current
-              )
-                .then((confirmationResult) => {
-                  console.log(confirmationResult);
+              signInWithEmailAndPassword(authantication, email, password)
+                .then((userCredential) => {
+                  console.log(userCredential)
                 })
                 .catch((error) => {
-                  console.log("err", error);
+                  console.log(error);
                 })
             }
             title="تسجيل الدخول"

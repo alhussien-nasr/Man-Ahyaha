@@ -25,11 +25,19 @@ export const AddReqScreen = ({ navigation }) => {
   const [hospital, setHospital] = useState();
   const [counter, setCounter] = useState(0);
   const [reqList, setReqList] = useState([]);
+  const [bloodDonation, setBloodDonation] = useState(false);
+  const [platelets, setPlatelets] = useState(false);
+  const [description, setDescription] = useState();
+
   console.log(type);
   console.log(city);
   console.log(hospital);
   console.log(counter);
   console.log(reqList);
+  console.log(platelets);
+  console.log(bloodDonation);
+  console.log(description);
+
   useEffect(() => {
     if (reqList.length === 1) {
       navigation.navigate("MyRequestsScreen", { param: reqList });
@@ -73,14 +81,36 @@ export const AddReqScreen = ({ navigation }) => {
         onIncres={() => setCounter(counter + 1)}
       />
       <View style={styles.row}>
-        <AppSelector style={styles.selector} title="تبرع بالدم" />
-        <AppSelector style={styles.selector} title="الصفائح الدموية" />
+        <AppSelector
+          style={styles.selector}
+          title="تبرع بالدم"
+          isChecked={bloodDonation}
+          disableBuiltInState
+          onPress={() => {
+            setBloodDonation(true);
+            setPlatelets(false);
+          }}
+        />
+        <AppSelector
+          style={styles.selector}
+          title="الصفائح الدموية"
+          isChecked={platelets}
+          disableBuiltInState
+          onPress={() => {
+            setBloodDonation(false);
+            setPlatelets(true);
+          }}
+        />
       </View>
       <Text style={{ textAlign: "right", marginBottom: 20, marginTop: 10 }}>
         طبيعة المرض ( حالته )
       </Text>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} multiline />
+        <TextInput
+          style={styles.input}
+          multiline
+          onChangeText={(val) => setDescription(val)}
+        />
       </View>
       <View style={[styles.row]}>
         <Text style={styles.text}>
@@ -97,7 +127,18 @@ export const AddReqScreen = ({ navigation }) => {
         style={styles.btn}
         title="اضافة الطلب"
         onPress={() => {
-          setReqList((li) => [...li, { type, city, hospital, counter }]);
+          setReqList((li) => [
+            ...li,
+            {
+              type,
+              city,
+              hospital,
+              counter,
+              donationType:
+                bloodDonation === true ? "تبرع بالدم" : "الصفائح الدموية",
+              description,
+            },
+          ]);
         }}
       />
     </Screen>

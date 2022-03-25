@@ -4,7 +4,7 @@ import { color } from "../config/color";
 import { Screen } from "../components/Screen";
 import { AppDropDown } from "../components/AppDropDown";
 import { Card } from "../components/Card";
-import { collection,  getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
 
 export const Home = ({ navigation }) => {
@@ -15,15 +15,15 @@ export const Home = ({ navigation }) => {
     if (docSnap) {
       console.log(
         "Document data:",
-        docSnap.forEach((i)=>console.log(i.data().id))
+        docSnap.forEach((i) => console.log(i.id))
       );
-      setList(docSnap.docs);
+      docSnap.forEach((i) => setList((li) => [...li, i.data()]));
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }, []);
-  // console.log(list);
+  console.log("li", list);
   return (
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />

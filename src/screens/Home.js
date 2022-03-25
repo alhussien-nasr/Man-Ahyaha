@@ -1,12 +1,29 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
 import { color } from "../config/color";
 import { Screen } from "../components/Screen";
 import { AppDropDown } from "../components/AppDropDown";
 import { Card } from "../components/Card";
+import { collection,  getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebase-config";
 
 export const Home = ({ navigation }) => {
-  console.log(navigation)
+  const [list, setList] = useState([]);
+  useEffect(async () => {
+    const docSnap = await getDocs(collection(db, "donation"));
+
+    if (docSnap) {
+      console.log(
+        "Document data:",
+        docSnap.forEach((i)=>console.log(i.data().id))
+      );
+      setList(docSnap.docs);
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }, []);
+  // console.log(list);
   return (
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />
@@ -22,14 +39,18 @@ export const Home = ({ navigation }) => {
           title=" المدينة"
         />
       </View>
-      {/* <Card
-        onPress={() => navigation.navigate("RequestNameScreen")}
-        type={"A"}
-        numper={4}
-        city=" مكة المكرمة"
-        hospital="56  فندق الساعه الدور الخامس"
-        target={4}
-      /> */}
+      {list && (
+        <FlatList
+          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+          style={{ width: "100%" }}
+          data={list}
+          renderItem={({ item }) => (
+            <View style={{ alignItems: "center" }}>
+              <Card item={item} />
+            </View>
+          )}
+        />
+      )}
     </Screen>
   );
 };

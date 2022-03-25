@@ -18,31 +18,27 @@ import { AppSelector } from "../components/AppSelector";
 import { color } from "../config/color";
 import { AppButton } from "../components/AppButton";
 import { ListPicker } from "../components/ListPicker";
+import { db, authantication } from "../firebase/firebase-config";
+import { addDoc, collection } from "firebase/firestore";
+import { add } from "react-native-reanimated";
 
 export const AddReqScreen = ({ navigation }) => {
   const [type, setType] = useState("");
   const [city, setCity] = useState("");
   const [hospital, setHospital] = useState("");
   const [target, setTarget] = useState(1);
-  const [reqList, setReqList] = useState([]);
   const [bloodDonation, setBloodDonation] = useState(true);
   const [platelets, setPlatelets] = useState(false);
   const [description, setDescription] = useState("");
+  const donation = collection(db, "donation");
 
   console.log(type);
   console.log(city);
   console.log(hospital);
   console.log(target);
-  console.log(reqList);
   console.log(platelets);
   console.log(bloodDonation);
   console.log(description);
-
-  useEffect(() => {
-    if (reqList.length === 1) {
-      navigation.navigate("MyRequestsScreen", { param: reqList });
-    }
-  }, [reqList]);
 
   return (
     <Screen style={styles.container}>
@@ -127,18 +123,16 @@ export const AddReqScreen = ({ navigation }) => {
         style={styles.btn}
         title="اضافة الطلب"
         onPress={() => {
-          setReqList((li) => [
-            ...li,
-            {
-              type,
-              city,
-              hospital,
-              target,
-              donationType:
-                bloodDonation === true ? "تبرع بالدم" : "الصفائح الدموية",
-              description,
-            },
-          ]);
+          addDoc(donation, {
+            type,
+            city,
+            hospital,
+            target,
+            donationType:
+              bloodDonation === true ? "تبرع بالدم" : "الصفائح الدموية",
+            description,
+            id: authantication.currentUser.uid,
+          });
         }}
       />
     </Screen>

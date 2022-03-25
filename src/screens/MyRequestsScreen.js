@@ -4,16 +4,27 @@ import { Card } from "../components/Card";
 import { color } from "../config/color";
 import { Screen } from "../components/Screen";
 import AddReqButton from "../components/AddReqButton";
+import { authantication, db } from "../firebase/firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
-export const MyRequestsScreen = ({ navigation, route }) => {
+export const MyRequestsScreen = ({ navigation }) => {
   const [list, setList] = useState([]);
 
-  useEffect(() => {
-    if (route.params?.param) {
-      setList((li) => [...li, ...route.params.param]);
-      console.log("ss", list);
+  useEffect(async () => {
+    const docSnap = await getDocs(collection(db, "donation"));
+
+    if (docSnap) {
+      console.log("Document data:", docSnap.docs);
+      setList(
+        docSnap.docs.filter(
+          (item) => item.data().id === authantication.currentUser.uid
+        )
+      );
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
     }
-  }, [route.params?.param]);
+  }, []);
 
   console.log("ss", list);
   return (

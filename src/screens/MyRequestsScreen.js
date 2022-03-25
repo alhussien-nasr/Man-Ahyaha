@@ -6,11 +6,11 @@ import { Screen } from "../components/Screen";
 import AddReqButton from "../components/AddReqButton";
 
 export const MyRequestsScreen = ({ navigation, route }) => {
-  const [list, setList] = useState();
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     if (route.params?.param) {
-      setList(route.params.param);
+      setList((li) => [...li, ...route.params.param]);
       console.log("ss", list);
     }
   }, [route.params?.param]);
@@ -22,23 +22,26 @@ export const MyRequestsScreen = ({ navigation, route }) => {
       <View style={styles.row}>
         <AddReqButton onPress={() => navigation.navigate("AddReqScreen")} />
         <View>
-          <Text style={styles.numstyle}>٢٥</Text>
+          <Text style={styles.numstyle}>{list.length}</Text>
           <Text style={styles.text}>طلب</Text>
         </View>
       </View>
-      {/* {reqList&&
+      {list && (
         <FlatList
-          data={reqList}
-          renderItem={({ item }) => <Card city={item.city} />}
+          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+          style={{ width: "100%" }}
+          data={list}
+          renderItem={({ item }) => {
+            const { city } = item;
+            console.log("item", item);
+            return (
+              <View style={{ alignItems: "center" }}>
+                <Card item={item} numper={0} />
+              </View>
+            );
+          }}
         />
-      } */}
-      <Card
-        // onPress={() => }
-        type={"A"}
-        details
-        city=" مكة المكرمة"
-        hospital="56  فندق الساعه الدور الخامس"
-      />
+      )}
     </Screen>
   );
 };

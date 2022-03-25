@@ -8,13 +8,14 @@ import { color } from "../config/color";
 export const Card = ({
   userName,
   date,
-  hospital,
-  city,
-  type,
+  item,
   numper,
   details,
   onPress,
-  target
+  target,
+  hospital,
+  city,
+  type,
 }) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.card}>
@@ -30,12 +31,12 @@ export const Card = ({
           <View style={styles.locationContainer}>
             <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
             <Text style={{ color: color.midGray }} numberOfLines={1}>
-              {city + " " + hospital}
+              {item.city + " " + item.hospital}
             </Text>
           </View>
           <View style={styles.row}>
             <View style={styles.typecontainer}>
-              <Text style={styles.type}>{type}</Text>
+              <Text style={styles.type}>{item.type}</Text>
             </View>
             {!details ? (
               <>
@@ -45,21 +46,23 @@ export const Card = ({
                 </View>
                 <View style={styles.Progress}>
                   <CircularProgress
-                    value={numper}
+                    value={!numper ? 0 : numper}
                     radius={25}
                     duration={2000}
                     textColor={"black"}
-                    maxValue={target}
+                    maxValue={item.target}
                     textStyle={{ bottom: 6, right: 7, fontSize: 16 }}
                     subtitle={`/`}
-                    title={target}
+                    title={item.target}
                     activeStrokeColor={color.primiry}
                     activeStrokeWidth={2}
                     inActiveStrokeWidth={0}
                     subtitleStyle={styles.subtitleStyle}
                     titleStyle={styles.titleStyle}
                   />
-                  <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
+                  {numper === target ? (
+                    <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
+                  ):null}
                 </View>
               </>
             ) : (

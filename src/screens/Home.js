@@ -22,14 +22,14 @@ export const Home = ({ navigation }) => {
           title=" المدينة"
         />
       </View>
-      <Card
+      {/* <Card
         onPress={() => navigation.navigate("RequestNameScreen")}
         type={"A"}
         numper={4}
         city=" مكة المكرمة"
         hospital="56  فندق الساعه الدور الخامس"
         target={4}
-      />
+      /> */}
     </Screen>
   );
 };

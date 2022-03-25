@@ -20,19 +20,19 @@ import { AppButton } from "../components/AppButton";
 import { ListPicker } from "../components/ListPicker";
 
 export const AddReqScreen = ({ navigation }) => {
-  const [type, setType] = useState();
-  const [city, setCity] = useState();
-  const [hospital, setHospital] = useState();
-  const [counter, setCounter] = useState(0);
+  const [type, setType] = useState("");
+  const [city, setCity] = useState("");
+  const [hospital, setHospital] = useState("");
+  const [target, setTarget] = useState(1);
   const [reqList, setReqList] = useState([]);
-  const [bloodDonation, setBloodDonation] = useState(false);
+  const [bloodDonation, setBloodDonation] = useState(true);
   const [platelets, setPlatelets] = useState(false);
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
 
   console.log(type);
   console.log(city);
   console.log(hospital);
-  console.log(counter);
+  console.log(target);
   console.log(reqList);
   console.log(platelets);
   console.log(bloodDonation);
@@ -76,9 +76,9 @@ export const AddReqScreen = ({ navigation }) => {
       </AppDropDown>
       <AppCounter
         style={styles.vSpace}
-        counter={counter}
-        onDecres={() => setCounter(counter - 1)}
-        onIncres={() => setCounter(counter + 1)}
+        counter={target}
+        onDecres={() => setTarget(target - 1)}
+        onIncres={() => setTarget(target + 1)}
       />
       <View style={styles.row}>
         <AppSelector
@@ -133,7 +133,7 @@ export const AddReqScreen = ({ navigation }) => {
               type,
               city,
               hospital,
-              counter,
+              target,
               donationType:
                 bloodDonation === true ? "تبرع بالدم" : "الصفائح الدموية",
               description,

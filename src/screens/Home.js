@@ -9,21 +9,22 @@ import { db } from "../firebase/firebase-config";
 
 export const Home = ({ navigation }) => {
   const [list, setList] = useState([]);
+
   useEffect(async () => {
     const docSnap = await getDocs(collection(db, "donation"));
 
     if (docSnap) {
-      console.log(
-        "Document data:",
-        docSnap.forEach((i) => console.log(i.id))
-      );
-      docSnap.forEach((i) => setList((li) => [...li, i.data()]));
+      // console.log(
+      //   "Document data:",
+      //   docSnap.docs
+      // );
+      setList(docSnap.docs.map((i) => ({ ...i.data(), docId: i.id })));
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }, []);
-  console.log("li", list);
+  console.log(list);
   return (
     <Screen style={styles.container}>
       <View style={styles.redBackGround} />
@@ -44,6 +45,7 @@ export const Home = ({ navigation }) => {
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           style={{ width: "100%" }}
           data={list}
+          keyExtractor={(item) => item.docId}
           renderItem={({ item }) => (
             <View style={{ alignItems: "center" }}>
               <Card item={item} />

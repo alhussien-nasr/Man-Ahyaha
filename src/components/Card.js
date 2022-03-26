@@ -5,18 +5,7 @@ import CircularProgress from "react-native-circular-progress-indicator";
 
 import { color } from "../config/color";
 
-export const Card = ({
-  userName,
-  date,
-  item,
-  numper,
-  details,
-  onPress,
-  target,
-  hospital,
-  city,
-  type,
-}) => {
+export const Card = ({ item, numper, details, onPress, target }) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.card}>
       <View style={styles.container}>
@@ -25,8 +14,8 @@ export const Card = ({
         </View>
         <View style={styles.detailsContainer}>
           <View style={styles.row}>
-            <Text>hussien nasr</Text>
-            <Text>2022/3/3</Text>
+            <Text>{item.userName}</Text>
+            <Text>{item.date}</Text>
           </View>
           <View style={styles.locationContainer}>
             <SimpleLineIcons name="location-pin" size={18} color={color.gray} />
@@ -42,7 +31,7 @@ export const Card = ({
               <>
                 <View style={styles.DonationsReqContainer}>
                   <Text style={styles.num}> {numper}</Text>
-                  <Text>تبرعات صفائح </Text>
+                  <Text>{item.donationType} </Text>
                 </View>
                 <View style={styles.Progress}>
                   <CircularProgress
@@ -62,12 +51,12 @@ export const Card = ({
                   />
                   {numper === target ? (
                     <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
-                  ):null}
+                  ) : null}
                 </View>
               </>
             ) : (
               <View style={styles.phoneNumper}>
-                <Text style={styles.phoneNumperText}>+20101111111</Text>
+                <Text style={styles.phoneNumperText}>{item.phone}</Text>
               </View>
             )}
           </View>

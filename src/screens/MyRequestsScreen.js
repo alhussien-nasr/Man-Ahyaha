@@ -16,12 +16,11 @@ export const MyRequestsScreen = ({ navigation }) => {
     if (docSnap) {
       console.log("Document data:", docSnap.docs);
       setList(
-        docSnap.docs.filter(
-          (item) => item.data().id === authantication.currentUser.uid
-        )
+        docSnap.docs
+          .filter((item) => item.data().id === authantication.currentUser.uid)
+          .map((i) => i.data())
       );
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }, []);

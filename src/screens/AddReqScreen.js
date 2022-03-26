@@ -19,7 +19,7 @@ import { color } from "../config/color";
 import { AppButton } from "../components/AppButton";
 import { ListPicker } from "../components/ListPicker";
 import { db, authantication } from "../firebase/firebase-config";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
 import { add } from "react-native-reanimated";
 
 export const AddReqScreen = ({ navigation }) => {
@@ -30,7 +30,10 @@ export const AddReqScreen = ({ navigation }) => {
   const [bloodDonation, setBloodDonation] = useState(true);
   const [platelets, setPlatelets] = useState(false);
   const [description, setDescription] = useState("");
+  const [user, setUser] = useState("");
+
   const donation = collection(db, "donation");
+  const users = collection(db, "users");
 
   console.log(type);
   console.log(city);
@@ -39,7 +42,19 @@ export const AddReqScreen = ({ navigation }) => {
   console.log(platelets);
   console.log(bloodDonation);
   console.log(description);
+  let year = new Date().getFullYear();
+  let month = new Date().getMonth() + 1;
+  let day = new Date().getDate();
+  let date = `${year}/${month}/${day}`;
 
+  useEffect(async () => {
+    const data = await getDocs(users);
+    console.log(authantication.currentUser.email);
+    data.docs
+      .filter((i) => i.data().email === authantication.currentUser.email)
+      .forEach((i) => setUser(i.data()));
+  }, []);
+  console.log(user);
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
@@ -132,7 +147,11 @@ export const AddReqScreen = ({ navigation }) => {
               bloodDonation === true ? "تبرع بالدم" : "الصفائح الدموية",
             description,
             id: authantication.currentUser.uid,
+            date,
+            userName: user.name,
+            phone: user.phoneNumber,
           });
+          navigation.navigate("MyRequestsScreen");
         }}
       />
     </Screen>

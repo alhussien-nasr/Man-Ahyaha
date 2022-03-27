@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 import { Screen } from "../components/Screen";
@@ -19,10 +19,20 @@ import { color } from "../config/color";
 import { AppButton } from "../components/AppButton";
 import { ListPicker } from "../components/ListPicker";
 import { db, authantication } from "../firebase/firebase-config";
-import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
-import { add } from "react-native-reanimated";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  MenuTrigger,
+  MenuOption,
+  Menu,
+  renderers,
+  MenuOptions,
+} from "react-native-popup-menu";
+
 
 export const AddReqScreen = ({ navigation }) => {
+  const popup=useRef(MenuOption)
+  popup.current
+  console.log(popup.current)
   const [type, setType] = useState("");
   const [city, setCity] = useState("");
   const [hospital, setHospital] = useState("");
@@ -35,13 +45,6 @@ export const AddReqScreen = ({ navigation }) => {
   const donation = collection(db, "donation");
   const users = collection(db, "users");
 
-  console.log(type);
-  console.log(city);
-  console.log(hospital);
-  console.log(target);
-  console.log(platelets);
-  console.log(bloodDonation);
-  console.log(description);
   let year = new Date().getFullYear();
   let month = new Date().getMonth() + 1;
   let day = new Date().getDate();
@@ -49,12 +52,10 @@ export const AddReqScreen = ({ navigation }) => {
 
   useEffect(async () => {
     const data = await getDocs(users);
-    console.log(authantication.currentUser.email);
     data.docs
       .filter((i) => i.data().email === authantication.currentUser.email)
       .forEach((i) => setUser(i.data()));
   }, []);
-  console.log(user);
   return (
     <Screen style={styles.container}>
       <View style={styles.row}>
@@ -110,6 +111,7 @@ export const AddReqScreen = ({ navigation }) => {
           onPress={() => {
             setBloodDonation(false);
             setPlatelets(true);
+
           }}
         />
       </View>
@@ -150,7 +152,7 @@ export const AddReqScreen = ({ navigation }) => {
             date,
             userName: user.name,
             phone: user.phoneNumber,
-            numper: 0,
+            number: 0,
           });
           navigation.navigate("MyRequestsScreen");
         }}

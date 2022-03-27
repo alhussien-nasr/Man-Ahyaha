@@ -15,7 +15,7 @@ import { authantication } from "../firebase/firebase-config";
 
 const Drawer = createDrawerNavigator();
 export const AppDrawer = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const foo = () =>

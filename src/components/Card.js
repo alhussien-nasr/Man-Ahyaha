@@ -5,7 +5,7 @@ import CircularProgress from "react-native-circular-progress-indicator";
 
 import { color } from "../config/color";
 
-export const Card = ({ item, numper, details, onPress, target }) => {
+export const Card = ({ item, number, details, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.card}>
       <View style={styles.container}>
@@ -30,12 +30,12 @@ export const Card = ({ item, numper, details, onPress, target }) => {
             {!details ? (
               <>
                 <View style={styles.DonationsReqContainer}>
-                  <Text style={styles.num}> {numper}</Text>
+                  <Text style={styles.num}> {item.number}</Text>
                   <Text>{item.donationType} </Text>
                 </View>
                 <View style={styles.Progress}>
                   <CircularProgress
-                    value={item.numper}
+                    value={item.number}
                     radius={25}
                     duration={2000}
                     textColor={"black"}

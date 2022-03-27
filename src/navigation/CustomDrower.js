@@ -13,7 +13,7 @@ import {
 
 export const CustomDrower = (props) => {
   const auth = getAuth();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const foo = () =>

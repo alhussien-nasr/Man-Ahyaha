@@ -16,13 +16,8 @@ export const Home = ({ navigation }) => {
     const docSnap = await getDocs(collection(db, "donation"));
 
     if (docSnap) {
-      // console.log(
-      //   "Document data:",
-      //   docSnap.docs
-      // );
       setList(docSnap.docs.map((i) => ({ ...i.data(), docId: i.id })));
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }, [isFocused]);

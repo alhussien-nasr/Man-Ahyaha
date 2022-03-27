@@ -14,19 +14,34 @@ import { Details } from "../components/Details";
 import { AppButton } from "../components/AppButton";
 import { db } from "../firebase/firebase-config";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
 
-export const RequestsDetailsScreen = ({ route }) => {
+export const RequestsDetailsScreen = ({ route, navigation }) => {
   const [list, setList] = useState([]);
-  const [donation, setDonation] = useState(1);
-  console.log(donation)
+  const [donation, setDonation] = useState(list.number);
+  const [disabled, setDisabled] = useState(false);
+
+  console.log(donation);
   const { docId } = route.params;
   console.log(docId);
   const docRef = doc(db, "donation", docId);
   useEffect(async () => {
     const res = await getDoc(docRef);
     setList(res.data());
+    setDonation(res.data().number);
   }, [donation]);
+
+  useEffect(() => {
+    if (list.number < donation) {
+      updateDoc(docRef, { number: donation });
+      navigation.navigate("Home");
+    }
+  }, [donation]);
+
+  console.log(docId);
+  console.log(donation);
   console.log(list);
+
   return (
     <Screen style={styles.screen}>
       <View style={styles.redBackGround} />
@@ -43,9 +58,14 @@ export const RequestsDetailsScreen = ({ route }) => {
           <AppButton
             style={styles.donationBtn}
             title="التبرع للمريض"
+            disabled={disabled}
             onPress={() => {
-              setDonation((n) => n + 1);
-              updateDoc(docRef, { numper: donation });
+              list.number === list.target
+                ? setDisabled(true)
+                : setDisabled(false);
+              setDonation((i) => i + 1);
+
+              // navigation.navigate('Home')
             }}
           />
 
@@ -58,7 +78,7 @@ export const RequestsDetailsScreen = ({ route }) => {
             title={`مطلوب ${list.target} تبرعات دم`}
             progress
             target={list.target}
-            numper={list.numper ? list.numper : 0}
+            numper={list.number ? list.number : 0}
             style={styles.space}
           />
           <Details title={list.hospital} style={styles.space} />

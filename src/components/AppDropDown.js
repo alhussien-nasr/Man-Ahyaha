@@ -18,12 +18,12 @@ export const AppDropDown = ({
   val,
 }) => {
   return (
-    <Menu 
+    <Menu
       style={[styles.container, style]}
       renderer={renderers.Popover}
       rendererProps={{ placement: "bottom", anchorStyle: styles.anchorStyle }}
     >
-      <MenuTrigger >
+      <MenuTrigger>
         <View style={[styles.trigger]}>
           <Ionicons name="chevron-down" size={30} color={color} />
           {!val ? (
@@ -35,8 +35,8 @@ export const AppDropDown = ({
           )}
         </View>
       </MenuTrigger>
-      <MenuOptions   optionsContainerStyle={[styles.options, OptionStyles]}>
-        <MenuOption>{children}</MenuOption>
+      <MenuOptions  optionsContainerStyle={[styles.options, OptionStyles]}>
+        <MenuOption  >{children}</MenuOption>
       </MenuOptions>
     </Menu>
   );

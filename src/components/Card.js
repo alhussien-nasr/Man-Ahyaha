@@ -35,7 +35,7 @@ export const Card = ({ item, numper, details, onPress, target }) => {
                 </View>
                 <View style={styles.Progress}>
                   <CircularProgress
-                    value={!numper ? 0 : numper}
+                    value={item.numper}
                     radius={25}
                     duration={2000}
                     textColor={"black"}
@@ -49,7 +49,7 @@ export const Card = ({ item, numper, details, onPress, target }) => {
                     subtitleStyle={styles.subtitleStyle}
                     titleStyle={styles.titleStyle}
                   />
-                  {numper === target ? (
+                  {item.numper === item.target ? (
                     <Text style={{ alignSelf: "flex-end" }}>تمت</Text>
                   ) : null}
                 </View>

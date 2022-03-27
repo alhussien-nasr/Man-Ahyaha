@@ -150,6 +150,7 @@ export const AddReqScreen = ({ navigation }) => {
             date,
             userName: user.name,
             phone: user.phoneNumber,
+            numper: 0,
           });
           navigation.navigate("MyRequestsScreen");
         }}

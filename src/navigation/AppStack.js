@@ -4,7 +4,7 @@ import { AddReqScreen } from "../screens/AddReqScreen";
 import { Home } from "../screens/Home";
 import { MyRequestsScreen } from "../screens/MyRequestsScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
-import { RequestNameScreen } from "../screens/RequestsDetailsScreen";
+import { RequestsDetailsScreen } from "../screens/RequestsDetailsScreen";
 import { SignInScreen } from "../screens/SignInScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SettingsScreen } from "../screens/SettingsScreen";
@@ -108,14 +108,14 @@ export const HomeStack = ({ navigation }) => {
         }}
       />
       <Stack.Screen
-        name="RequestNameScreen"
-        component={RequestNameScreen}
+        name="RequestsDetailsScreen"
+        component={RequestsDetailsScreen}
         options={{ title: "اسم الطلب" }}
       />
       <Stack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
-        options={{ title: "اسم الطلب" }}
+        options={{ title: "حسابي" }}
       />
     </Stack.Navigator>
   );

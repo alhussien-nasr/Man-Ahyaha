@@ -6,14 +6,27 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { color } from "../config/color";
 import { Screen } from "../components/Screen";
 import { Details } from "../components/Details";
 import { AppButton } from "../components/AppButton";
+import { db } from "../firebase/firebase-config";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-export const RequestNameScreen = () => {
+export const RequestsDetailsScreen = ({ route }) => {
+  const [list, setList] = useState([]);
+  const [donation, setDonation] = useState(1);
+  console.log(donation)
+  const { docId } = route.params;
+  console.log(docId);
+  const docRef = doc(db, "donation", docId);
+  useEffect(async () => {
+    const res = await getDoc(docRef);
+    setList(res.data());
+  }, [donation]);
+  console.log(list);
   return (
     <Screen style={styles.screen}>
       <View style={styles.redBackGround} />
@@ -26,41 +39,36 @@ export const RequestNameScreen = () => {
               source={require("../assets/Group8.png")}
             />
           </View>
-          <Text>kkkkkk</Text>
-          <AppButton style={styles.donationBtn} title="التبرع للمريض" />
+          <Text>{list.userName}</Text>
+          <AppButton
+            style={styles.donationBtn}
+            title="التبرع للمريض"
+            onPress={() => {
+              setDonation((n) => n + 1);
+              updateDoc(docRef, { numper: donation });
+            }}
+          />
 
-          <Details title="فصيلة الدم" subTitle="B+" style={styles.space} />
           <Details
-            title="مطلوب ٥ تبرعات دم"
-            progress
-            target={6}
-            numper={1}
+            title="فصيلة الدم"
+            subTitle={list.type}
             style={styles.space}
           />
-          <Details title="مستشفي الاخلاص الدولي" style={styles.space} />
+          <Details
+            title={`مطلوب ${list.target} تبرعات دم`}
+            progress
+            target={list.target}
+            numper={list.numper ? list.numper : 0}
+            style={styles.space}
+          />
+          <Details title={list.hospital} style={styles.space} />
           <Details title="رقم الملف" style={styles.space} />
           <View style={{ width: "100%" }}>
             <Text style={styles.text}>طبيعة المرض ( حالته )</Text>
           </View>
         </View>
         <View style={styles.condationContainer}>
-          <Text style={styles.condation}>
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-            طبيعة المرض ( حالته ) طبيعة المرض ( حالته ) طبيعة المرض ( حالته )
-          </Text>
+          <Text style={styles.condation}>{list.description}</Text>
         </View>
       </ScrollView>
     </Screen>

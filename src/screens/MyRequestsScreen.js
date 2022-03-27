@@ -6,8 +6,11 @@ import { Screen } from "../components/Screen";
 import AddReqButton from "../components/AddReqButton";
 import { authantication, db } from "../firebase/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import { useIsFocused } from "@react-navigation/native";
 
 export const MyRequestsScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
+
   const [list, setList] = useState([]);
 
   useEffect(async () => {
@@ -18,12 +21,12 @@ export const MyRequestsScreen = ({ navigation }) => {
       setList(
         docSnap.docs
           .filter((item) => item.data().id === authantication.currentUser.uid)
-          .map((i) => i.data())
+          .map((i) => ({ ...i.data(), docId: i.id }))
       );
     } else {
       console.log("No such document!");
     }
-  }, []);
+  }, [isFocused]);
 
   console.log("ss", list);
   return (
@@ -41,12 +44,20 @@ export const MyRequestsScreen = ({ navigation }) => {
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
           style={{ width: "100%" }}
           data={list}
+          keyExtractor={(i) => i.docId}
           renderItem={({ item }) => {
-            const { city } = item;
-            console.log("item", item);
             return (
               <View style={{ alignItems: "center" }}>
-                <Card item={item} numper={0} />
+                <Card
+                  onPress={() =>
+                    navigation.navigate("RequestsDetailsScreen", {
+                      docId: item.docId,
+                    })
+                  }
+                  item={item}
+                  numper={0}
+                  details
+                />
               </View>
             );
           }}

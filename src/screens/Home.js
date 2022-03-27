@@ -6,9 +6,11 @@ import { AppDropDown } from "../components/AppDropDown";
 import { Card } from "../components/Card";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase-config";
+import { useIsFocused } from "@react-navigation/native";
 
 export const Home = ({ navigation }) => {
   const [list, setList] = useState([]);
+  const isFocused = useIsFocused();
 
   useEffect(async () => {
     const docSnap = await getDocs(collection(db, "donation"));
@@ -23,7 +25,7 @@ export const Home = ({ navigation }) => {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
-  }, []);
+  }, [isFocused]);
   console.log(list);
   return (
     <Screen style={styles.container}>
@@ -48,7 +50,14 @@ export const Home = ({ navigation }) => {
           keyExtractor={(item) => item.docId}
           renderItem={({ item }) => (
             <View style={{ alignItems: "center" }}>
-              <Card item={item} />
+              <Card
+                onPress={() =>
+                  navigation.navigate("RequestsDetailsScreen", {
+                    docId: item.docId,
+                  })
+                }
+                item={item}
+              />
             </View>
           )}
         />
